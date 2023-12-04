@@ -14,8 +14,12 @@ form#create-employee{
 }
 
 .custom-btn{
-    background-color: $color-primary-complement;
+    background-color: $color-tertiary;
     text-align: center;
+    color: white;
+}
+.custom-btn:hover{
+    background-color: $color-secondary;
 }
 .custom-bg{
     background-color: $color-primary;
@@ -29,8 +33,8 @@ form#create-employee{
 .gradient-background {
    background: $background-image-bottom;
    background-size: cover;
-   background-position: right;
-   background-color: $color-primary-complement
+   background-position: center;
+   background-color: $color-primary-complement;
 }
 
 

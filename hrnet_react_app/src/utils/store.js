@@ -1,12 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import employeesReducer from '../features/employeesSlice';
-import updateListReducer from '../features/updateSliceList';
+import { configureStore } from "@reduxjs/toolkit";
+import employeesReducer from "../features/employeesSlice";
 
 const store = configureStore({
   reducer: {
-        employees: employeesReducer,
-        updateListEmployees : updateListReducer,
+    employees: employeesReducer,
   },
 });
 
-export default store;
+export { store };

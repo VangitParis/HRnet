@@ -1,0 +1,7 @@
+@import '../utils/mixins';
+.gradient-background_employeeList{
+    background: $background-image-bottom_3;
+    background-size: cover;
+    background-position: right;
+    background-color: $color-primary-complement
+ }

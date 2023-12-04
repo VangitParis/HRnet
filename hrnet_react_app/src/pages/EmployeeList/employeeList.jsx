@@ -1,20 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import EmployeeTable from "../../components/Tables/employeeTable";
-// import { updateListEmployees } from "../../features/updateSliceList";
+import { useSelector } from "react-redux";
 import { selectEmployees } from "../../utils/selectors";
-export default function EmployeeList() {
-  const dispatch = useDispatch();
-  const employeesList = useSelector(selectEmployees);
-  useEffect(() => {
-    dispatch(employeesList)
-  },[dispatch, employeesList])
+import '../../styles/sass/pages/_employeesList.scss';
 
+
+export default function EmployeeList() {
+
+  const employeesList = useSelector(selectEmployees);
   return (
-    <main className="container-fluid gradient-background mt-0">
+    <main className="container-fluid gradient-background_employeeList mt-0 d-flex flex-column justify-content vh-100">
       <h1 className="mt-1 text-center">Current Employees</h1>
-      <EmployeeTable />
+      <EmployeeTable employees={employeesList}/>
       <Link to="/" className="mt-1 text-center">Home</Link>
     </main>
   );

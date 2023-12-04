@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { saveEmployee } from "../../features/employeesSlice";
 import "../../styles/sass/pages/_home.scss";
@@ -20,7 +20,7 @@ export default function Home() {
     const zipCode = document.getElementById("zip-code").value;
 
     //Création de l'objet employeeData avec les valeurs récupérées depuis les champs du formulaire
-    const employeeData = {
+    const newEmployeeData = {
       firstName,
       lastName,
       dateOfBirth,
@@ -32,7 +32,8 @@ export default function Home() {
       zipCode,
     };
 
-    dispatch(saveEmployee(employeeData));
+    dispatch(saveEmployee(newEmployeeData));
+
   };
 
   return (
@@ -41,7 +42,7 @@ export default function Home() {
       <div className="d-flex align-items-center mt-5 flex-lg-row flex-column">
         <form className="row g-1 mb-md-0 mb-3 mx-auto" id="create-employee">
           <div className="col-md-6 p-1">
-            <label htmlFor="first-name" className="form-label">
+            <label htmlFor="first-name" className="form-label fw-bold">
               First Name
             </label>
             <input
@@ -54,7 +55,7 @@ export default function Home() {
           </div>
 
           <div className="col-md-6 p-1">
-            <label htmlFor="last-name" className="form-label">
+            <label htmlFor="last-name" className="form-label fw-bold">
               Last Name
             </label>
             <input
@@ -67,7 +68,7 @@ export default function Home() {
           </div>
 
           <div className="col-md-6 p-1">
-            <label htmlFor="date-of-birth" className="form-label">
+            <label htmlFor="date-of-birth" className="form-label fw-bold">
               Date of Birth
             </label>
             <input
@@ -79,7 +80,7 @@ export default function Home() {
           </div>
 
           <div className="col-md-6 p-1">
-            <label htmlFor="start-date" className="form-label">
+            <label htmlFor="start-date" className="form-label fw-bold">
               Start Date
             </label>
             <input
@@ -93,7 +94,7 @@ export default function Home() {
           <fieldset className="row gy-2 gx-0 align-items-center">
             <legend className="p-1 mb-0">Address</legend>
             <div className="col-md-6 col-lg-12 p-1">
-              <label htmlFor="street" className="form-label">
+              <label htmlFor="street" className="form-label fw-bold">
                 Street
               </label>
               <input
@@ -105,7 +106,7 @@ export default function Home() {
             </div>
             <div className="row gx-0 gy-1">
               <div className="col-md-8 col-lg-4 p-1">
-                <label className="form-label" htmlFor="city">
+                <label className="form-label fw-bold" htmlFor="city">
                   City
                 </label>
                 <input
@@ -117,7 +118,7 @@ export default function Home() {
               </div>
 
               <div className="col-md-8 col-lg-4 p-1">
-                <label className="form-label" htmlFor="state">
+                <label className="form-label fw-bold" htmlFor="state">
                   State
                 </label>
                 <select
@@ -128,7 +129,7 @@ export default function Home() {
               </div>
 
               <div className="col-md-8 col-lg-4 p-1">
-                <label className="form-label" htmlFor="zip-code">
+                <label className="form-label fw-bold" htmlFor="zip-code">
                   Zip Code
                 </label>
                 <input
@@ -142,7 +143,7 @@ export default function Home() {
           </fieldset>
 
           <div className="col-auto col-md-12 col-lg-12 p-1 gx-0">
-            <label htmlFor="department" className="form-label">
+            <label htmlFor="department" className="form-label fw-bold">
               Department
             </label>
             <select
@@ -159,7 +160,7 @@ export default function Home() {
           </div>
           <div className="col-12">
             <div className="d-grid gap-2 mx-auto mb-5 mt-5 col-md-3">
-              <button className="btn custom-btn" onClick={handleSaveEmployee}>
+              <button className="btn custom-btn fw-bold" onClick={handleSaveEmployee}>
                 Save
               </button>
             </div>
