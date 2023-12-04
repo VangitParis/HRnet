@@ -1,0 +1,39 @@
+@import '../utils/mixins';
+@import '../utils/variables';
+
+form#create-employee{
+  width: 100%;
+  @include respond-to($breakpoint-md) {
+    width: 50%; 
+  }
+}
+
+.form-control{
+    border-radius: 5px;
+    border: 1px solid $color-primary;
+}
+
+.custom-btn{
+    background-color: $color-primary-complement;
+    text-align: center;
+}
+.custom-bg{
+    background-color: $color-primary;
+    border-radius: 5px;
+}
+.cover{
+    transform: translateY(-71px);
+    text-align: center;
+}
+
+.gradient-background {
+   background: $background-image-bottom;
+   background-size: cover;
+   background-position: right;
+   background-color: $color-primary-complement
+}
+
+
+
+
+  

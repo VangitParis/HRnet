@@ -1,0 +1,25 @@
+
+@import './variables';
+
+// COLORS
+$color-primary : #596F07;
+$color-secondary : #C4D680;
+$color-tertiary : #93ad18;
+$color-primary-complement : #DED5BD;
+
+// GRADIENT
+$background-gradient-bottom: linear-gradient(to bottom, $color-primary, $color-secondary, $color-tertiary);
+
+
+// IMAGES BACKGROUND
+$background-image-top : url(../../../assets/wave.png);
+$background-image-bottom : url(../../../assets/wave-bottom.svg);
+
+
+
+/* Mixin pour les media queries */
+@mixin respond-to($breakpoint) {
+    @media screen and (min-width: $breakpoint) {
+      @content;
+    }
+  }

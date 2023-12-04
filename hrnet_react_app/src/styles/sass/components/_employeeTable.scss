@@ -1,0 +1,13 @@
+@import '../utils/mixins';
+
+
+.custom-table{
+width: 80%;
+border-color: $color-secondary;
+border: 2px solid $color-tertiary;
+border-radius: 5px;
+
+}
+.custom-header{
+ font-size: 1.1rem;
+}
