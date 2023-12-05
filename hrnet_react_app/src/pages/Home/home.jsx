@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { saveEmployee } from "../../features/employeesSlice";
@@ -7,19 +7,25 @@ import "../../styles/sass/pages/_home.scss";
 export default function Home() {
   const dispatch = useDispatch();
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [department, setDepartment] = useState("");
+  const [street, setStreet] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipCode, setZipCode] = useState("");
+
+
   const handleSaveEmployee = async (e) => {
     e.preventDefault();
-    const firstName = document.getElementById("first-name").value;
-    const lastName = document.getElementById("last-name").value;
-    const dateOfBirth = document.getElementById("date-of-birth").value;
-    const startDate = document.getElementById("start-date").value;
-    const department = document.getElementById("department").value;
-    const street = document.getElementById("street").value;
-    const city = document.getElementById("city").value;
-    const state = document.getElementById("state").value;
-    const zipCode = document.getElementById("zip-code").value;
-
-    //Création de l'objet employeeData avec les valeurs récupérées depuis les champs du formulaire
+    // Vérification des champs obligatoires
+    if (!firstName || !lastName) {
+      alert("Veuillez remplir tous les champs obligatoires.");
+      return;
+    }
+    // Création de l'objet employeeData avec les valeurs des champs
     const newEmployeeData = {
       firstName,
       lastName,
@@ -32,12 +38,26 @@ export default function Home() {
       zipCode,
     };
 
+    // Appel de l'action saveEmployee avec les données du nouvel employé
     dispatch(saveEmployee(newEmployeeData));
 
+    // Réinitialisation des champs du formulaire après la soumission
+    setFirstName("");
+    setLastName("");
+    setDateOfBirth("");
+    setStartDate("");
+    setDepartment("");
+    setStreet("");
+    setCity("");
+    setState("");
+    setZipCode("");
+
+    // Affichage d'un message de confirmation !!!! à remplacer par la modal
+    alert("Employee Created!");
   };
 
   return (
-    <main className="container-fluid gradient-background mt-0">
+    <main className="container-fluid gradient-background mt-0 vh-100 d-flex flex-column justify-content">
       <h1 className="text-center">Create Employee</h1>
       <div className="d-flex align-items-center mt-5 flex-lg-row flex-column">
         <form className="row g-1 mb-md-0 mb-3 mx-auto" id="create-employee">
@@ -48,9 +68,11 @@ export default function Home() {
             <input
               type="text"
               id="first-name"
-              
               aria-label="First Name"
               className="form-control"
+              onChange={(e) => setFirstName(e.target.value)}
+              value={firstName}
+              required
             />
           </div>
 
@@ -61,9 +83,11 @@ export default function Home() {
             <input
               type="text"
               id="last-name"
-              
               aria-label="Last Name"
               className="form-control"
+              onChange={(e) => setLastName(e.target.value)}
+              value={lastName}
+              required
             />
           </div>
 
@@ -74,8 +98,10 @@ export default function Home() {
             <input
               id="date-of-birth"
               type="text"
-              
               className="form-control"
+              onChange={(e) => setDateOfBirth(e.target.value)}
+              value={dateOfBirth}
+              required
             />
           </div>
 
@@ -86,8 +112,10 @@ export default function Home() {
             <input
               id="start-date"
               type="text"
-              
               className="form-control"
+              onChange={(e) => setStartDate(e.target.value)}
+              value={startDate}
+              required
             />
           </div>
 
@@ -97,12 +125,7 @@ export default function Home() {
               <label htmlFor="street" className="form-label fw-bold">
                 Street
               </label>
-              <input
-                id="street"
-                type="text"
-                
-                className="form-control"
-              />
+              <input id="street" type="text" className="form-control" />
             </div>
             <div className="row gx-0 gy-1">
               <div className="col-md-8 col-lg-4 p-1">
@@ -112,8 +135,9 @@ export default function Home() {
                 <input
                   id="city"
                   type="text"
-                  
                   className="form-control"
+                  onChange={(e) => setStreet(e.target.value)}
+                  value={street}
                 />
               </div>
 
@@ -135,7 +159,8 @@ export default function Home() {
                 <input
                   id="zip-code"
                   type="number"
-                  
+                  onChange={(e) => setZipCode(e.target.value)}
+                  value={zipCode}
                   className="form-control"
                 />
               </div>
@@ -150,6 +175,8 @@ export default function Home() {
               name="department"
               id="department"
               className="form-select form-control"
+              onChange={(e) => setDepartment(e.target.value)}
+              value={department}
             >
               <option>Sales</option>
               <option>Marketing</option>
@@ -160,7 +187,10 @@ export default function Home() {
           </div>
           <div className="col-12">
             <div className="d-grid gap-2 mx-auto mb-5 mt-5 col-md-3">
-              <button className="btn custom-btn fw-bold" onClick={handleSaveEmployee}>
+              <button
+                className="btn custom-btn fw-bold"
+                onClick={handleSaveEmployee}
+              >
                 Save
               </button>
             </div>
