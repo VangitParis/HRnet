@@ -1,20 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { useTable, usePagination, useGlobalFilter } from "react-table";
+import { useTable, usePagination, useGlobalFilter, useSortBy } from "react-table";
 import { tableColumns } from "../../utils/tableData";
 import "../../styles/sass/components/_employeeTable.scss";
 
-export default function EmployeeTable() {
-  const employeesList = useSelector((state) => state.employees.list);
-
+export default function EmployeeTable({ data }) {
+  const tableData = data
+  console.log(tableData);
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
-    page,
-    state: { pageIndex},
+    state: { pageIndex },
     setGlobalFilter,
     setPageSize,
     previousPage,
@@ -22,15 +20,22 @@ export default function EmployeeTable() {
   } = useTable(
     {
       columns: tableColumns,
-      data: employeesList,
+      data: tableData, 
     },
-    useGlobalFilter, // Ajoutez le hook useGlobalFilter pour activer la recherche globale
+    useGlobalFilter,
+    useSortBy,
     usePagination
   );
+
   return (
     <div className="table-responsive-sm">
+      {/* Recherche dans le tableau */}
       <div>
+        <label className="form-label fw-normal" htmlFor="search">
+          Search:{" "}
+        </label>
         <input
+          id="search"
           type="text"
           placeholder="Search..."
           onChange={(e) => setGlobalFilter(e.target.value)}
@@ -71,21 +76,9 @@ export default function EmployeeTable() {
       </div>
 
       <div>
-        <span>
-          Page{" "}
-          <strong>
-            {pageIndex + 1} of {page.length}
-          </strong>{" "}
-        </span>
-        <button onClick={() => previousPage()} >
-          Previous
-        </button>
-        <span>
-          Page {pageIndex + 1} of {page.length}
-        </span>
-        <button onClick={() => nextPage()} >
-          Next
-        </button>
+        <button onClick={() => previousPage()}>Previous</button>
+        <button>{pageIndex + 1}</button>
+        <button onClick={() => nextPage()}>Next</button>
       </div>
     </div>
   );

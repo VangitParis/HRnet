@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-
-import { saveEmployee } from "../../features/employeesSlice";
+import { TextInput } from "vangit-component";
+// import { createEmployeeData } from "../../services/employeesServices";
 import "../../styles/sass/pages/_home.scss";
+import { saveEmployee } from "../../features/employeesSlice";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -16,7 +17,6 @@ export default function Home() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
-
 
   const handleSaveEmployee = async (e) => {
     e.preventDefault();
@@ -38,9 +38,6 @@ export default function Home() {
       zipCode,
     };
 
-    // Appel de l'action saveEmployee avec les données du nouvel employé
-    dispatch(saveEmployee(newEmployeeData));
-
     // Réinitialisation des champs du formulaire après la soumission
     setFirstName("");
     setLastName("");
@@ -54,6 +51,10 @@ export default function Home() {
 
     // Affichage d'un message de confirmation !!!! à remplacer par la modal
     alert("Employee Created!");
+
+    // Appel de l'action createEmployeeData avec les données du nouvel employé
+    dispatch(saveEmployee(newEmployeeData));
+   
   };
 
   return (
@@ -200,6 +201,7 @@ export default function Home() {
           Employee Created!
         </div>
       </div>
+      <TextInput />
     </main>
   );
 }

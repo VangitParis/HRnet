@@ -1,0 +1,49 @@
+{
+    "employees": [
+      {
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "startDate": "20/11/2023",
+        "dateOfBirth": "08/08/2008",
+        "department": "Sales",
+        "street": "89 av Belley",
+        "city": "Beverly Hills",
+        "state": "California",
+        "zipCode": "00012"
+      },
+      {
+        "firstName": "John",
+        "lastName": "Does",
+        "startDate": "11/01/2023",
+        "dateOfBirth": "11/09/1990",
+        "department": "Marketing",
+        "street": "123 street Kennedy",
+        "city": "Beverly Hills",
+        "state": "California",
+        "zipCode": "00012"
+      },
+      {
+        "firstName": "Mark",
+        "lastName": "Lavoine",
+        "startDate": "10/10/2020",
+        "dateOfBirth": "01/01/2001",
+        "department": "Human Resources",
+        "street": "3 av Johnson",
+        "city": "Madison",
+        "state": "Wisconsin",
+        "zipCode": "10001"
+      },
+      {
+        "firstName": "Tony",
+        "lastName": "Stark",
+        "startDate": "08/11/2022",
+        "dateOfBirth": "13/12/1998",
+        "department": "Engineering",
+        "street": "90 street Thomson",
+        "city": "Broadway",
+        "state": "New York",
+        "zipCode": "53000"
+      }
+    ]
+  }
+  
