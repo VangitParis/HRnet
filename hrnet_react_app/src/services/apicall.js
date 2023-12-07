@@ -9,12 +9,20 @@
  * @throws {Error} - Une erreur si la requête échoue.
  */
 
-import { mockTableData } from "../utils/tableData";
 
-
-export async function callApi(url, employeeData) {
+export async function callApi(url, data, method) {
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  const requestOptions = {
+    method,
+    headers,
+  };
+  if (data) {
+    requestOptions.body = JSON.stringify(data);
+  }
     try {
-      const response = await fetch(mockTableData);
+      const response = await fetch(url, requestOptions);
       if (!response.ok) {
         throw new Error("Erreur lors de la promesse");
        }

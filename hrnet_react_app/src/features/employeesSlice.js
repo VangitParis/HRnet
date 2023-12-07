@@ -15,7 +15,6 @@ const employeesSlice = createSlice({
     saveEmployee: (currentState, action) => {
       // Utilisation des données dans l'action.payload
       currentState.list = [...currentState.list, action.payload];
-      console.log("Création d'un nouvel employé ===", currentState.list);
     },
   },
 
@@ -39,11 +38,6 @@ const employeesSlice = createSlice({
 
         // Mettre à jour la liste avec les nouveaux employés filtrés
         currentState.list = [...currentState.list, ...filteredMockListData];
-
-        console.log(
-          "Liste mise à jour avec les employés ===",
-          currentState.list
-        );
       })
 
       .addCase(getMockEmployeeData.rejected, (currentState, action) => {

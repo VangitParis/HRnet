@@ -1,67 +1,85 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { TextInput } from "vangit-component";
-// import { createEmployeeData } from "../../services/employeesServices";
 import "../../styles/sass/pages/_home.scss";
 import { saveEmployee } from "../../features/employeesSlice";
-
+import states from "../../utils/states";
 export default function Home() {
   const dispatch = useDispatch();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [department, setDepartment] = useState("");
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zipCode, setZipCode] = useState("");
+  //Définition des champs
+  const fieldNames = [
+    "firstName",
+    "lastName",
+    "dateOfBirth",
+    "startDate",
+    "department",
+    "street",
+    "city",
+    "state",
+    "zipCode",
+  ];
+  //initialState créé avec la méthode reduce pour créer un objet d'état initial 
+  //avec chaque champ initialisé à une chaîne vide
+  const initialState = fieldNames.reduce((state, fieldName) => {
+    state[fieldName] = "";
+    return state;
+  }, {});
+
+  //ÉTat global du formulaire avec useState
+  const [formState, setFormState] = useState(initialState);
+
+  //fonction pour mettre à jour un champ du formulaire sans modifier l'état 
+  const handleChange = (fieldName, value) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      [fieldName]: value,
+    }));
+  };
+
 
   const handleSaveEmployee = async (e) => {
     e.preventDefault();
+
     // Vérification des champs obligatoires
-    if (!firstName || !lastName) {
-      alert("Veuillez remplir tous les champs obligatoires.");
-      return;
+    if (fieldNames) {
+     
+      // Création de l'objet employeeData avec les valeurs des champs
+      const newEmployeeData = {};
+      fieldNames.forEach((fieldName) => {
+        newEmployeeData[fieldName] = formState[fieldName];
+      });
+
+      // Réinitialisation des champs du formulaire après la soumission
+      setFormState(initialState);
+
+      // Affichage d'un message de confirmation !!!! à remplacer par la modal
+      alert("Employee Created!");
+
+      // Appel de l'action createEmployeeData avec les données du nouvel employé
+      dispatch(saveEmployee(newEmployeeData));
+      return 
     }
-    // Création de l'objet employeeData avec les valeurs des champs
-    const newEmployeeData = {
-      firstName,
-      lastName,
-      dateOfBirth,
-      startDate,
-      department,
-      street,
-      city,
-      state,
-      zipCode,
-    };
-
-    // Réinitialisation des champs du formulaire après la soumission
-    setFirstName("");
-    setLastName("");
-    setDateOfBirth("");
-    setStartDate("");
-    setDepartment("");
-    setStreet("");
-    setCity("");
-    setState("");
-    setZipCode("");
-
-    // Affichage d'un message de confirmation !!!! à remplacer par la modal
-    alert("Employee Created!");
-
-    // Appel de l'action createEmployeeData avec les données du nouvel employé
-    dispatch(saveEmployee(newEmployeeData));
-   
   };
+  useEffect(() => {
+    // Remplir le menu déroulant des états après le rendu initial
+    const stateSelect = document.getElementById('state');
+    states.forEach((state) => {
+      const option = document.createElement('option');
+      option.value = state.abbreviation;
+      option.text = state.name;
+      stateSelect.appendChild(option);
+    });
+  }, []);
 
   return (
     <main className="container-fluid gradient-background mt-0 vh-100 d-flex flex-column justify-content">
       <h1 className="text-center">Create Employee</h1>
       <div className="d-flex align-items-center mt-5 flex-lg-row flex-column">
-        <form className="row g-1 mb-md-0 mb-3 mx-auto" id="create-employee">
+        <form
+          className="row g-1 mb-md-0 mb-3 mx-auto"
+          id="create-employee"
+          onSubmit={handleSaveEmployee}
+        >
           <div className="col-md-6 p-1">
             <label htmlFor="first-name" className="form-label fw-bold">
               First Name
@@ -71,8 +89,10 @@ export default function Home() {
               id="first-name"
               aria-label="First Name"
               className="form-control"
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
+              // onChange={(e) => setFirstName(e.target.value)}
+              // value={firstName}
+              value={formState.firstName}
+              onChange={(e) => handleChange("firstName", e.target.value)}
               required
             />
           </div>
@@ -86,8 +106,10 @@ export default function Home() {
               id="last-name"
               aria-label="Last Name"
               className="form-control"
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
+              // onChange={(e) => setLastName(e.target.value)}
+              // value={lastName}
+              value={formState.lastName}
+              onChange={(e) => handleChange("lastName", e.target.value)}
               required
             />
           </div>
@@ -100,8 +122,10 @@ export default function Home() {
               id="date-of-birth"
               type="text"
               className="form-control"
-              onChange={(e) => setDateOfBirth(e.target.value)}
-              value={dateOfBirth}
+              // onChange={(e) => setDateOfBirth(e.target.value)}
+              // value={dateOfBirth}
+              value={formState.dateOfBirth}
+              onChange={(e) => handleChange("dateOfBirth", e.target.value)}
               required
             />
           </div>
@@ -114,8 +138,10 @@ export default function Home() {
               id="start-date"
               type="text"
               className="form-control"
-              onChange={(e) => setStartDate(e.target.value)}
-              value={startDate}
+              // onChange={(e) => setStartDate(e.target.value)}
+              // value={startDate}
+              value={formState.starDate}
+              onChange={(e) => handleChange("startDate", e.target.value)}
               required
             />
           </div>
@@ -126,7 +152,13 @@ export default function Home() {
               <label htmlFor="street" className="form-label fw-bold">
                 Street
               </label>
-              <input id="street" type="text" className="form-control" />
+              <input
+                id="street"
+                type="text"
+                className="form-control"
+                value={formState.street}
+                onChange={(e) => handleChange("street", e.target.value)}
+              />
             </div>
             <div className="row gx-0 gy-1">
               <div className="col-md-8 col-lg-4 p-1">
@@ -137,8 +169,10 @@ export default function Home() {
                   id="city"
                   type="text"
                   className="form-control"
-                  onChange={(e) => setStreet(e.target.value)}
-                  value={street}
+                  // onChange={(e) => setStreet(e.target.value)}
+                  // value={street}
+                  value={formState.city}
+                  onChange={(e) => handleChange("city", e.target.value)}
                 />
               </div>
 
@@ -150,6 +184,8 @@ export default function Home() {
                   name="state"
                   id="state"
                   className="form-select form-control"
+                  value={formState.state}
+                  onChange={(e) => handleChange("state", e.target.value)}
                 ></select>
               </div>
 
@@ -160,8 +196,10 @@ export default function Home() {
                 <input
                   id="zip-code"
                   type="number"
-                  onChange={(e) => setZipCode(e.target.value)}
-                  value={zipCode}
+                  // onChange={(e) => setZipCode(e.target.value)}
+                  // value={zipCode}
+                  value={formState.zipCode}
+                  onChange={(e) => handleChange("zipCode", e.target.value)}
                   className="form-control"
                 />
               </div>
@@ -176,8 +214,10 @@ export default function Home() {
               name="department"
               id="department"
               className="form-select form-control"
-              onChange={(e) => setDepartment(e.target.value)}
-              value={department}
+              // onChange={(e) => setDepartment(e.target.value)}
+              // value={department}
+              value={formState.department}
+              onChange={(e) => handleChange("department", e.target.value)}
             >
               <option>Sales</option>
               <option>Marketing</option>
@@ -201,7 +241,6 @@ export default function Home() {
           Employee Created!
         </div>
       </div>
-      <TextInput />
     </main>
   );
 }

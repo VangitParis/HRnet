@@ -1,3 +1,5 @@
+import {getAbbreviationFromState} from '../modelisation/modelisation';
+
 export const tableColumns = [
   { Header: "First Name", accessor: "firstName" },
   { Header: "Last Name", accessor: "lastName" },
@@ -58,3 +60,9 @@ export const mockTableData = {
         },
     ]
 }
+
+const employeeState = mockTableData.employees[0].state; // "Californie"
+console.log(employeeState);
+
+const stateAbbreviation = getAbbreviationFromState(employeeState);
+console.log(stateAbbreviation);

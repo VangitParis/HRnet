@@ -4,8 +4,8 @@ import { tableColumns } from "../../utils/tableData";
 import "../../styles/sass/components/_employeeTable.scss";
 
 export default function EmployeeTable({ data }) {
-  const tableData = data
-  console.log(tableData);
+  const tableData = data;
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -49,9 +49,15 @@ export default function EmployeeTable({ data }) {
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()} className="custom-header">
+               {headerGroup.headers.map((column) => (
+                <th
+                  {...column.getHeaderProps(column.getSortByToggleProps())} // Ajoutez cette ligne pour activer le tri
+                  className="custom-header"
+                >
                   {column.render("Header")}
+                  <span>
+                    {column.isSorted ? (column.isSortedAsc ? " 🔽" : " 🔼") : ""}
+                  </span>
                 </th>
               ))}
             </tr>

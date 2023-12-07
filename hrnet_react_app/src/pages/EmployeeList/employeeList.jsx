@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import EmployeeTable from "../../components/Tables/employeeTable";
 import { selectEmployees } from "../../utils/selectors";
-import { saveEmployee, updateEmployeeList } from "../../features/employeesSlice";
 import "../../styles/sass/pages/_employeesList.scss";
 import { getMockEmployeeData } from "../../services/employeesServices";
 
