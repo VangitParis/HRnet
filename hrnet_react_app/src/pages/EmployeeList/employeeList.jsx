@@ -17,7 +17,9 @@ export default function EmployeeList() {
   }, [dispatch]);
 
   return loading ? (
-    <main className="main">Loading...</main>
+    <main className="spinner-border text-secondary" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </main>
   ) : error ? (
     <main className="main">Error: {error}</main>
   ) : (

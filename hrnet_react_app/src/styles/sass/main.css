@@ -92,7 +92,7 @@ form#create-employee {
 
 /* Mixin pour les media queries */
 .gradient-background_employeeList {
-  background: url(../../../assets/wave-bottom.svg);
+  background: url(../../../assets/wave.svg);
   background-size: cover;
   background-position: bottom;
   background-color: rgba(222, 213, 189, 0.231372549);

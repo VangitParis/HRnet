@@ -4,7 +4,6 @@
  * @param {string} url - L'URL de l'API.
  * @param {string} method - La méthode HTTP (GET, POST, PUT, etc.).
  * @param {Object} [data=null] - Les données à envoyer avec la requête (null si aucune donnée n'est requise).
- * @param {string|null} [authToken=null] - Le token, si nécessaire.
  * @returns {Promise<Object>} - Une promesse avec les données de la réponse JSON de l'API.
  * @throws {Error} - Une erreur si la requête échoue.
  */

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import ReactModal from "react-modal";
+import React, { useEffect } from "react";
 import Modal from "react-modal";
 
 const customStyles = {
@@ -14,19 +13,18 @@ const customStyles = {
 };
 
 export default function ModalApp({ modalIsOpen, setModalIsOpen }) {
-  function closeModal() {
-    setModalIsOpen(false);
-  }
+  //const closeModal = () => setModalIsOpen(false);
+
   useEffect(() => {}, [modalIsOpen]);
 
   return (
     <Modal
       isOpen={modalIsOpen}
-      onRequestClose={closeModal}
+      onRequestClose={() => setModalIsOpen(false)}
       style={customStyles}
       contentLabel="Modal"
     >
-      <button className="btn custom-btn close-modal-btn d-flex" onClick={closeModal}>
+      <button className="btn custom-btn close-modal-btn d-flex" onClick={() => setModalIsOpen(false)}>
         {" "}
         X{" "}
       </button>

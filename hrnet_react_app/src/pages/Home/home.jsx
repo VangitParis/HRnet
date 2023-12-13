@@ -36,7 +36,7 @@ export default function Home() {
     return state;
   }, {});
 
-  //ÉTat global du formulaire avec useState
+  //État global du formulaire avec useState
   const [formState, setFormState] = useState(initialState);
 
   // Bootstrap validation des champs pour appliquer le style
@@ -67,9 +67,9 @@ export default function Home() {
     const areFieldsValid = fieldNames.every((fieldName) => {
       return formState[fieldName].trim() !== "";
     });
-
+    // Si vide ne renvoie rien
     if (!areFieldsValid) {
-      console.log(areFieldsValid);
+      // console.log(areFieldsValid);
       return;
     }
     // Création de l'objet employeeData avec les valeurs des champs
@@ -163,7 +163,7 @@ export default function Home() {
             </label>
             <input
               id="date-of-birth"
-              type="text"
+              type="date"
               className={`form-control ${
                 formState.dateOfBirth &&
                 !isDateInputValid(formState.dateOfBirth) &&
@@ -187,7 +187,7 @@ export default function Home() {
             </label>
             <input
               id="start-date"
-              type="text"
+              type="date"
               className={`form-control ${
                 formState.startDate &&
                 !isDateInputValid(formState.startDate) &&
