@@ -41,6 +41,13 @@ export default function Header() {
                   </Link>
                 </li>
               )}
+              {isEmployeeListPage && (
+                <li className="nav-item ">
+                  <Link className="nav-link active" aria-current="page" to="/">
+                    Home
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
