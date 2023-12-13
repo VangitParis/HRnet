@@ -38,6 +38,18 @@ form#create-employee{
 }
 
 
+.display-block{
+    display: block !important;
+}
 
-
-  
+.close-modal-btn{
+    position: relative;
+    right: 0;
+    top: -15px;
+    left: 95%;
+    bottom: 15px;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+}

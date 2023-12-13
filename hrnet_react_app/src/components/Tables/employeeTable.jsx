@@ -1,7 +1,15 @@
 import React from "react";
-import { useTable, usePagination, useGlobalFilter, useSortBy } from "react-table";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  useTable,
+  usePagination,
+  useGlobalFilter,
+  useSortBy,
+} from "react-table";
 import { tableColumns } from "../../utils/tableData";
-import "../../styles/sass/components/_employeeTable.scss";
+import "../../styles/sass/components/_employeeTable.scss"; // Ajout de l'import pour vos styles
+import { Link } from "react-router-dom";
 
 export default function EmployeeTable({ data }) {
   const tableData = data;
@@ -10,9 +18,9 @@ export default function EmployeeTable({ data }) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
     prepareRow,
-    state: { pageIndex },
+    state: { pageIndex, pageSize, totalItems },
     setGlobalFilter,
     setPageSize,
     previousPage,
@@ -20,7 +28,8 @@ export default function EmployeeTable({ data }) {
   } = useTable(
     {
       columns: tableColumns,
-      data: tableData, 
+      data: tableData,
+      initialState: { pageSize: 10 }, // Définissez le pageSize initial ici
     },
     useGlobalFilter,
     useSortBy,
@@ -28,35 +37,59 @@ export default function EmployeeTable({ data }) {
   );
 
   return (
-    <div className="table-responsive-sm">
-      {/* Recherche dans le tableau */}
-      <div>
-        <label className="form-label fw-normal" htmlFor="search">
-          Search:{" "}
+    <div className="employee-table table-responsive-sm">
+      <div className="d-flex search">
+        <label className="form-label fw-normal" htmlFor="pageSize">
+          Show&nbsp;
+          <select
+            id="pageSize"
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+            }}
+          >
+            <option value={10}>10</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>
+          &nbsp;entries
         </label>
-        <input
-          id="search"
-          type="text"
-          placeholder="Search..."
-          onChange={(e) => setGlobalFilter(e.target.value)}
-        />
+
+        <label className="form-label fw-normal" htmlFor="search">
+          Search:&nbsp;
+          <input
+            id="search"
+            type="text"
+            placeholder=""
+            onChange={(e) => setGlobalFilter(e.target.value)}
+          />
+        </label>
       </div>
       <table
         {...getTableProps()}
-        className="table mx-auto mt-5 table-hover custom-table"
+        className="table mx-auto mt-1 table-hover custom-table"
         id="employee-table"
       >
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-               {headerGroup.headers.map((column) => (
+              {headerGroup.headers.map((column) => (
                 <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())} // Ajoutez cette ligne pour activer le tri
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
                   className="custom-header"
                 >
                   {column.render("Header")}
                   <span>
-                    {column.isSorted ? (column.isSortedAsc ? " 🔽" : " 🔼") : ""}
+                    {column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <FontAwesomeIcon icon={faSortDown} />
+                      ) : (
+                        <FontAwesomeIcon icon={faSortUp} />
+                      )
+                    ) : (
+                      ""
+                    )}
                   </span>
                 </th>
               ))}
@@ -64,7 +97,7 @@ export default function EmployeeTable({ data }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -76,15 +109,25 @@ export default function EmployeeTable({ data }) {
           })}
         </tbody>
       </table>
-      <div>
-        <button onClick={() => setPageSize(10)}>10</button>
-        <button onClick={() => setPageSize(25)}>25</button>
-      </div>
-
-      <div>
-        <button onClick={() => previousPage()}>Previous</button>
-        <button>{pageIndex + 1}</button>
-        <button onClick={() => nextPage()}>Next</button>
+      <div className="custom-info" role="status" aria-live="polite">
+        {`Showing ${totalItems} to ${totalItems} of ${totalItems} entries`}
+      </div>{" "}
+      <div className="pagination d-flex">
+        <Link
+          className="paginate_button previous"
+          onClick={() => previousPage()} disabled={pageIndex === 0}>
+          Previous
+        </Link>{" "}
+        <span>
+          <Link className="paginate_button current">{pageIndex + 1}</Link>
+        </span>
+        <Link
+          className="paginate_button next"
+          onClick={() => nextPage()}
+          disabled={pageIndex === Math.ceil(totalItems / pageSize) - 1}
+        >
+          Next
+        </Link>
       </div>
     </div>
   );

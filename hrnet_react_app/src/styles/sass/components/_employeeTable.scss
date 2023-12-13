@@ -10,3 +10,34 @@ border-radius: 5px;
 .custom-header{
  font-size: 1.1rem;
 }
+
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: black;
+}
+
+.search{
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 10%;
+    margin-right: 10%;
+    >label>input{
+        border-color: $color-primary;
+        border-radius: 5px;
+    }
+}
+.pagination{
+    justify-content: space-between;
+    width: 10%;
+    align-items: center;
+    margin-left: 10%;
+}
+.current{
+    border: 1px solid;
+    color: white;
+    padding: 0 50%;
+
+}
