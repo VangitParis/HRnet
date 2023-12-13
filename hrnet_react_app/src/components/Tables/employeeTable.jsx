@@ -14,28 +14,32 @@ import { Link } from "react-router-dom";
 export default function EmployeeTable({ data }) {
   const tableData = data;
 
+  // Ajouter une fonction pour inclure l'espace après la saisie du texte
+
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    rows,
     page,
     prepareRow,
-    state: { pageIndex, pageSize, totalItems },
     setGlobalFilter,
+    state : { pageIndex, pageSize, globalFilter },
     setPageSize,
     previousPage,
     nextPage,
   } = useTable(
+   
     {
       columns: tableColumns,
       data: tableData,
-      initialState: { pageSize: 10 }, // Définissez le pageSize initial ici
+      initialState: { pageSize: 10 }, //initial pageSize=10
     },
+   
     useGlobalFilter,
     useSortBy,
     usePagination
   );
-
   return (
     <div className="employee-table table-responsive-sm">
       <div className="d-flex search">
@@ -109,25 +113,40 @@ export default function EmployeeTable({ data }) {
           })}
         </tbody>
       </table>
-      <div className="custom-info" role="status" aria-live="polite">
-        {`Showing ${totalItems} to ${totalItems} of ${totalItems} entries`}
-      </div>{" "}
-      <div className="pagination d-flex">
-        <Link
-          className="paginate_button previous"
-          onClick={() => previousPage()} disabled={pageIndex === 0}>
-          Previous
-        </Link>{" "}
-        <span>
-          <Link className="paginate_button current">{pageIndex + 1}</Link>
-        </span>
-        <Link
-          className="paginate_button next"
-          onClick={() => nextPage()}
-          disabled={pageIndex === Math.ceil(totalItems / pageSize) - 1}
-        >
-          Next
-        </Link>
+
+      <div
+        className="d-flex justify-content-between custom-info"
+        role="status"
+        aria-live="polite"
+      >
+        {/* Afficher le nombre d'éléments affichés dans la page actuelle par rapport au nombre total d'éléments dans le tableau */}
+        {`Showing ${page.length >0 ? pageIndex * pageSize + 1 : 0} to ${Math.min(
+          (pageIndex + 1) * pageSize,
+          page.length
+        ) } of ${ rows.length } entries`}
+       
+        {rows.length && globalFilter &&
+          ` (filtered from ${tableData.length} total entries)`}
+
+        <div className="pagination d-flex">
+          <Link
+            className="paginate_button previous"
+            onClick={() => previousPage()}
+            disabled={pageIndex === 0}
+          >
+            Previous
+          </Link>{" "}
+          <span>
+            <Link className="paginate_button current">{pageIndex + 1}</Link>
+          </span>
+          <Link
+            className="paginate_button next"
+            onClick={() => nextPage()}
+            disabled={pageIndex - 1}
+          >
+            Next
+          </Link>
+        </div>
       </div>
     </div>
   );

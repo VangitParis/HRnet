@@ -23,7 +23,7 @@ export default function EmployeeList() {
   ) : error ? (
     <main className="main">Error: {error}</main>
   ) : (
-    <main className="container-fluid gradient-background_employeeList mt-0 d-flex flex-column justify-content vh-100">
+    <main className="container-fluid gradient-background_employeeList mt-0 d-flex flex-column justify-content">
       <h1 className="mt-1 text-center">Current Employees</h1>
           <EmployeeTable data={newEmployeeList} />
       <Link to="/" className="mt-1 text-center">

@@ -131,13 +131,19 @@ a:hover {
 
 .pagination {
   justify-content: space-between;
-  width: 10%;
+  width: 15%;
   align-items: center;
-  margin-left: 10%;
 }
 
 .current {
   border: 1px solid;
   color: white;
   padding: 0 50%;
+}
+
+.custom-info {
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 10%;
+  margin-right: 10%;
 }/*# sourceMappingURL=main.css.map */
