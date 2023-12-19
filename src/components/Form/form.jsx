@@ -64,12 +64,8 @@ export default function Form() {
     const areFieldsValid = fieldNames.every((fieldName) => {
       const fieldValue = formState[fieldName];
       // Vérifier si le champ est de type chaîne de caractères
-      if (typeof fieldValue === "string" || typeof fieldValue === "number") {
         return fieldValue.toString().trim() !== "";
-      }
-
-      return true;
-    });
+          });
 
     // Si des champs ne sont pas valides, interrompre la soumission du formulaire
     if (!areFieldsValid) {
