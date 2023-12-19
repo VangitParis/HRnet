@@ -13,7 +13,7 @@ import './styles/sass/main.scss';
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 ReactModal.setAppElement('#root'); // ou tout autre élément auquel votre application est attachée
 
-const basename = process.env.NODE_ENV === 'development' ? '/' : '/hrnet';
+const basename = process.env.NODE_ENV === 'development' ? '/' : '/HRnet';
 
 
 
