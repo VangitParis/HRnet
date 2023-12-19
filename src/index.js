@@ -20,7 +20,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
       <React.StrictMode>
-      <BrowserRouter basename="./">
+      <BrowserRouter basename="/">
           <Header />
           <App />
         </BrowserRouter>
