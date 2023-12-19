@@ -14,7 +14,7 @@ const baseUrl = `http://localhost:3000`;
 export const getMockEmployeeData = createAsyncThunk( 
   "employees/getEmployeesMockList",
     async (employeeData , { rejectWithValue }) => {
-        const url = `${ baseUrl }/employees-list`;
+        const url = `${ baseUrl }`;
         const data = { employeeData };
 
         if (shouldUseMockData) {
