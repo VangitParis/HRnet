@@ -13,9 +13,9 @@ const baseUrl = `http://localhost:3000`;
 // Création du thunk
 export const getMockEmployeeData = createAsyncThunk( 
   "employees/getEmployeesMockList",
-    async ( { rejectWithValue }) => {
+    async (employeeData , { rejectWithValue }) => {
         const url = `${ baseUrl }`;
-        const data =  mockTableData ;
+        const data = { employeeData };
 
         if (shouldUseMockData) {
             const mockData = mockTableData.employees.map(employee => ({
@@ -28,8 +28,8 @@ export const getMockEmployeeData = createAsyncThunk(
             return mockData;
         }
         try {
-            const response = await callApi(url, data);
-            return response.status === 200 ? data : {}
+            const response = await callApi(url, mockTableData);
+            return response.status === 200 ? mockTableData : {}
         } catch (error) {
             if (error.response && error.response.data.message) {
                 return rejectWithValue("Invalid Fields");
