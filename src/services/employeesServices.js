@@ -8,7 +8,7 @@ import { getAbbreviationFromState } from "../modelisation/modelisation";
 let shouldUseMockData = Boolean(
   Number(process.env.REACT_APP_SHOULD_USE_MOCK_DATA)
 );
-const baseUrl = `http://localhost:3000`;
+const baseUrl = `http://localhost:3000/HRnet`;
 
 // Création du thunk
 export const getMockEmployeeData = createAsyncThunk( 
