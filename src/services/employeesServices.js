@@ -28,8 +28,8 @@ export const getMockEmployeeData = createAsyncThunk(
             return mockData;
         }
         try {
-            const response = await callApi(url, mockTableData);
-            return response.status === 200 ? mockTableData : {}
+            const response = await callApi(url, data);
+            return response.status === 200 ? data : {}
         } catch (error) {
             if (error.response && error.response.data.message) {
                 return rejectWithValue("Invalid Fields");
