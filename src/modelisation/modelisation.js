@@ -1,3 +1,4 @@
+import departments from "../utils/departments";
 import states from "../utils/states";
 
 // Abbreviation
@@ -23,3 +24,16 @@ export const isZipCodeValid = (zipCode) => {
 export const isDateInputValid = (dateOfBirth, startDate) => {
   return /\d{4}-\d{2}-\d{2}/.test(dateOfBirth, startDate)
 }
+
+//trier par ordre alphabétique les departmemnts
+
+departments.sort(function (a, b) {
+  if (a.name < b.name) {
+    return -1;
+  }
+  if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
+});
+

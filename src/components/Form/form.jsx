@@ -9,7 +9,6 @@ import {
 } from "../../modelisation/modelisation";
 import ModalApp from "../../components/Modal/modal";
 import Dropdown from "../Dropdown/dropdown";
-import states from "../../utils/states";
 
 export default function Form() {
   const dispatch = useDispatch();
@@ -31,7 +30,7 @@ export default function Form() {
   //initialState créé avec la méthode reduce pour créer un objet d'état initial
   //avec chaque champ initialisé à une chaîne vide
   const initialState = fieldNames.reduce((state, fieldName) => {
-    state[fieldName] = "";
+      state[fieldName] = "";
     return state;
   }, {});
 
@@ -75,7 +74,7 @@ export default function Form() {
     // Si des champs ne sont pas valides, interrompre la soumission du formulaire
     if (!areFieldsValid) {
       return;
-    }
+    } 
 
     // Création de l'objet employeeData avec les valeurs des champs
     const newEmployeeData = {};

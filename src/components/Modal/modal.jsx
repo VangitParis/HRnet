@@ -13,8 +13,6 @@ const customStyles = {
 };
 
 export default function ModalApp({ modalIsOpen, setModalIsOpen }) {
-  //const closeModal = () => setModalIsOpen(false);
-
   useEffect(() => {}, [modalIsOpen]);
 
   return (
@@ -24,11 +22,14 @@ export default function ModalApp({ modalIsOpen, setModalIsOpen }) {
       style={customStyles}
       contentLabel="Modal"
     >
-      <button className="btn custom-btn close-modal-btn d-flex" onClick={() => setModalIsOpen(false)}>
+      <button
+        className="btn custom-btn close-modal-btn d-flex"
+        onClick={() => setModalIsOpen(false)}
+      >
         {" "}
         X{" "}
       </button>
-      <h2 ref={(_subtitle) => (_subtitle)}>Employee Created !</h2>
+      <h2 ref={(_subtitle) => _subtitle}>Employee Created !</h2>
     </Modal>
   );
 }
