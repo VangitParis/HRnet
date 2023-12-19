@@ -1,7 +1,7 @@
 {
   "name": "hrnet",
   "version": "0.1.0",
-  "homepage": "/HRnet",
+  "homepage": "../",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
