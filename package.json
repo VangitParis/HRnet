@@ -1,6 +1,7 @@
 {
   "name": "hrnet",
   "version": "0.1.0",
+  "homepage": "https://vangitparis.github.io/HRnet/",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -50,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "sass": "^1.69.5"
   }
 }
