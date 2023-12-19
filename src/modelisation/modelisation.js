@@ -21,5 +21,5 @@ export const isZipCodeValid = (zipCode) => {
 };
 
 export const isDateInputValid = (dateOfBirth, startDate) => {
-  return /\d{4}(.\d{2}){2}(\s|T)(\d{2}.){2}\d{2}/.test(dateOfBirth, startDate)
+  return /\d{4}-\d{2}-\d{2}/.test(dateOfBirth, startDate)
 }
