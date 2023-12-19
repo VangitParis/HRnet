@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter as BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./utils/store";
 import Header from "./components/Layouts/Header/header";
@@ -20,7 +20,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
       <React.StrictMode>
-        <BrowserRouter basename="/HRnet/">
+      <BrowserRouter basename="/">
           <Header />
           <App />
         </BrowserRouter>
