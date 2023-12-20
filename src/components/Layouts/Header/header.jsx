@@ -13,7 +13,7 @@ export default function Header() {
     <header className="custom-border border-3">
       <nav className="navbar navbar-expand-lg navbar-custom navbar-light">
         <div className="container-fluid">
-          <Link className="navbar-brand fs-2" to="/">
+          <Link className="navbar-brand fs-2" to="/HRnet">
             HRnet
           </Link>
 
@@ -43,7 +43,7 @@ export default function Header() {
               )}
               {isEmployeeListPage && (
                 <li className="nav-item ">
-                  <Link className="nav-link active" aria-current="page" to="/">
+                  <Link className="nav-link active" aria-current="page" to="/HRnet">
                     Home
                   </Link>
                 </li>

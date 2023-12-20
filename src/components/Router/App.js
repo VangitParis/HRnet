@@ -10,9 +10,9 @@ export default function App() {
 
   return (
     <Routes>
-    <Route path="/" element={<Home />} />
+    <Route path="/HRnet/" element={<Home />} />
     <Route path="/employee-list" element={<EmployeeList />} />
-    <Route path="/*" element={<Error />} />
+    <Route path="HRnet/*" element={<Error />} />
   </Routes>
   );
 }
