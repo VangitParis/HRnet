@@ -7,13 +7,13 @@ export default function Header() {
   const location = useLocation();
 
   // Si l'emplacement actuel est "/employee-list"
-  const isEmployeeListPage = location.pathname === "/employee-list";
+  const isEmployeeListPage = location.pathname === "HRnet/employee-list";
 
   return (
     <header className="custom-border border-3">
       <nav className="navbar navbar-expand-lg navbar-custom navbar-light">
         <div className="container-fluid">
-          <Link className="navbar-brand fs-2" to="/HRnet">
+          <Link className="navbar-brand fs-2" to="HRnet/">
             HRnet
           </Link>
 
@@ -35,7 +35,7 @@ export default function Header() {
                   <Link
                     className="nav-link active"
                     aria-current="page"
-                    to="/employee-list"
+                    to="HRnet/employee-list"
                   >
                     View Current Employees
                   </Link>
@@ -43,7 +43,7 @@ export default function Header() {
               )}
               {isEmployeeListPage && (
                 <li className="nav-item ">
-                  <Link className="nav-link active" aria-current="page" to="/HRnet">
+                  <Link className="nav-link active" aria-current="page" to="HRnet/">
                     Home
                   </Link>
                 </li>
