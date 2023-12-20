@@ -21,7 +21,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
       <React.StrictMode>
-      <BrowserRouter basename={basename}>
+      <BrowserRouter basename='/HRnet'>
           <Header />
           <App />
         </BrowserRouter>
