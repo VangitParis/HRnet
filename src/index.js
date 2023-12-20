@@ -13,7 +13,6 @@ import './styles/sass/main.scss';
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 ReactModal.setAppElement('#root'); // ou tout autre élément auquel votre application est attachée
 
-const basename = process.env.NODE_ENV === "development" ? '/' : '/HRnet';
 
 
 
@@ -21,7 +20,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
       <React.StrictMode>
-      <BrowserRouter basename={basename}>
+      <BrowserRouter>
           <Header />
           <App />
         </BrowserRouter>
