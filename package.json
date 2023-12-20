@@ -1,7 +1,6 @@
 {
   "name": "hrnet",
   "version": "0.1.0",
-  "homepage": "https://vangitparis.github.io/HRnet/",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -27,7 +26,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build --baseName=HRnet",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy":"npm run build",
