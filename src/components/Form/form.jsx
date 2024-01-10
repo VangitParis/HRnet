@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { saveEmployee } from "../../features/employeesSlice";
 import {
@@ -9,9 +9,12 @@ import {
 } from "../../modelisation/modelisation";
 import ModalApp from "../../components/Modal/modal";
 import Dropdown from "../Dropdown/dropdown";
+import DatePicker from "plugin-datepicker";
+import "../../styles/sass/components/_form.scss";
 
 export default function Form() {
   const dispatch = useDispatch();
+  const inputRef = useRef(null);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -30,7 +33,7 @@ export default function Form() {
   //initialState créé avec la méthode reduce pour créer un objet d'état initial
   //avec chaque champ initialisé à une chaîne vide
   const initialState = fieldNames.reduce((state, fieldName) => {
-      state[fieldName] = "";
+    state[fieldName] = "";
     return state;
   }, {});
 
@@ -46,6 +49,14 @@ export default function Form() {
       ...prevState,
       [fieldName]: value,
     }));
+  };
+
+  const handleDateChange = (fieldName, date, classList) => {
+    if (isDateInputValid(date)) {
+      handleChange(fieldName, date);
+    } else {
+      console.error("Invalid date format");
+    }
   };
 
   // Fonction pour créer un employé
@@ -64,13 +75,13 @@ export default function Form() {
     const areFieldsValid = fieldNames.every((fieldName) => {
       const fieldValue = formState[fieldName];
       // Vérifier si le champ est de type chaîne de caractères
-        return fieldValue.toString().trim() !== "";
-          });
+      return fieldValue.toString().trim() !== "";
+    });
 
     // Si des champs ne sont pas valides, interrompre la soumission du formulaire
     if (!areFieldsValid) {
       return;
-    } 
+    }
 
     // Création de l'objet employeeData avec les valeurs des champs
     const newEmployeeData = {};
@@ -149,22 +160,33 @@ export default function Form() {
         <label htmlFor="date-of-birth" className="form-label fw-bold">
           Date of Birth
         </label>
-        <input
+        <DatePicker
+          inputRef={inputRef}
+          dateFormat={"dd/MM/yyyy"}
+          fontSize="1rem"
           id="date-of-birth"
-          type="date"
-          className={`form-control ${
+          minYear={2000}
+          maxYear={2025}
+          language={"en-EN"}
+          errorClass="invalid-feedback col-md-1"
+          value={formState.dateOfBirth}
+          calendarWidth="330px"
+          onSelect={(selectedDate) =>
+            handleDateChange("dateOfBirth", selectedDate)
+          }
+          inputClassName={`form-control ${
             formState.dateOfBirth &&
             !isDateInputValid(formState.dateOfBirth) &&
             "is-invalid"
-          }`}
-          value={formState.dateOfBirth}
-          onChange={(e) => handleChange("dateOfBirth", e.target.value)}
+          } `}
+          onChange={(e) => handleDateChange("dateOfBirth", e.target.value)}
+          monthSelectClass="custom-month-select-class"
+          yearSelectClass="custom-year-select-class"
           required
-          autoComplete="bday"
         />
         {formState.dateOfBirth && !isDateInputValid(formState.dateOfBirth) && (
-          <div className="invalid-feedback col-md-1">
-            Please provide a valid Date.
+          <div className={`errorClass`}>
+            Please provide a valid Date of Birth.
           </div>
         )}
       </div>
@@ -182,7 +204,7 @@ export default function Form() {
             "is-invalid"
           }`}
           value={formState.startDate}
-          onChange={(e) => handleChange("startDate", e.target.value)}
+          onChange={(e) => handleDateChange("startDate", e.target.value)}
           required
         />
         {formState.startDate && !isDateInputValid(formState.startDate) && (
@@ -276,9 +298,9 @@ export default function Form() {
               }`}
             />
             {formState.zipCode && !isZipCodeValid(formState.zipCode) && (
-              <p className="invalid-feedback col-md-1">
+              <div className="invalid-feedback col-md-1">
                 Please provide a valid zip code.
-              </p>
+              </div>
             )}
           </div>
         </div>
@@ -298,6 +320,7 @@ export default function Form() {
           required
           autoComplete="off"
         />
+        <div className="invalid-tooltip">Please select a valid state.</div>
       </div>
       <div className="col-12">
         <div className="d-grid gap-2 mx-auto mb-5 mt-5 col-md-3">

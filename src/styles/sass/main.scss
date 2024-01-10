@@ -7,3 +7,6 @@
 @import './pages/employeesList';
 @import './components/employeeTable';
 
+*, *::before, *::after{
+    box-sizing: border-box;
+}

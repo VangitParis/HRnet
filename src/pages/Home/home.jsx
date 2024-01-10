@@ -1,6 +1,7 @@
 import React from "react";
 import "../../styles/sass/pages/_home.scss";
 
+
 import Form from "../../components/Form/form";
 
 export default function Home() {

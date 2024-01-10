@@ -47,6 +47,11 @@ form#create-employee {
   border: 1px solid #596F07;
 }
 
+.inputStyle {
+  border-radius: 5px;
+  border: 1px solid #596F07;
+}
+
 .custom-btn {
   background-color: #93ad18;
   text-align: center;
@@ -93,12 +98,15 @@ form#create-employee {
 /* Mixin pour les media queries */
 .gradient-background_employeeList {
   background: url(../../../assets/wave.svg);
-  background-size: cover;
-  background-position: bottom;
+  background-repeat: no-repeat;
   background-color: rgba(222, 213, 189, 0.231372549);
 }
 
 /* Mixin pour les media queries */
+.employee-table {
+  margin-top: 100px;
+}
+
 .custom-table {
   width: 80%;
   border: 3px solid #596F07;
@@ -131,14 +139,14 @@ a:hover {
 
 .pagination {
   justify-content: space-between;
-  width: 15%;
+  width: 17%;
   align-items: center;
 }
 
 .current {
   border: 1px solid;
-  color: white;
-  padding: 0 50%;
+  color: black;
+  padding: 0.5% 3%;
 }
 
 .custom-info {
@@ -146,4 +154,8 @@ a:hover {
   justify-content: space-between;
   margin-left: 10%;
   margin-right: 10%;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }/*# sourceMappingURL=main.css.map */

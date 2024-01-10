@@ -7,9 +7,10 @@ $color-secondary : #C4D680;
 $color-tertiary : #93ad18;
 $color-primary-complement : #ded5bd3b;
 
+
 // GRADIENT
 $background-gradient-bottom: linear-gradient(to bottom, $color-primary, $color-secondary, $color-tertiary);
-
+$background-white: white;
 
 // IMAGES BACKGROUND
 $background-image-top : url(../../../assets/wave.png);

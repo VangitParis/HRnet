@@ -1,0 +1,59 @@
+@import '../utils/mixins';
+
+.calendar-icon{
+    font-size: 1rem;
+    color: black;
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    left: 90%;
+    cursor: pointer;
+}
+.input-container{
+    display: inline;
+}
+.input-date:focus-visible {
+    outline:inherit;
+}
+
+fieldset{
+    position: relative;
+    z-index: 1;
+}
+.custom-month-select-class, .custom-year-select-class{
+    font-size: 1rem;
+    color: black;
+    background-color: $background-white;
+    height: 30px;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+.custom-button-style{
+    background: $color-primary;
+}
+.custom-button-style:hover{
+    background: $color-secondary;
+}
+
+.custom-calendar-style{
+    width: 346px;
+    height: 200px;
+    z-index: 3;
+    position: absolute;
+    top: 340px;
+    --border-radius: 5px;
+    --accent-br: 5px;
+    // --side-padding: 10px 20px;
+}
+.custom-date-style.selected::before{
+    background-color: $color-primary;
+}
+
+.custom-date-style.selected {
+    color: white;
+  }
+.custom-date-style {
+    color: black;
+  }

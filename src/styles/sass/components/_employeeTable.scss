@@ -1,6 +1,9 @@
 @import '../utils/mixins';
 
+.employee-table{
+    margin-top: 100px;
 
+}
 .custom-table{
 width: 80%;
 border: 3px solid $color-primary;
@@ -31,13 +34,13 @@ a:hover{
 }
 .pagination{
     justify-content: space-between;
-    width: 15%;
+    width: 17%;
     align-items: center;
 }
 .current{
     border: 1px solid;
-    color: white;
-    padding: 0 50%;
+    color: black;
+    padding: 0.5% 3%;
 
 }
 

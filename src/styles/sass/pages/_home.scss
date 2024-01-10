@@ -12,11 +12,16 @@ form#create-employee{
     border-radius: 5px;
     border: 1px solid $color-primary;
 }
+.inputStyle{
+    border-radius: 5px;
+    border: 1px solid $color-primary;
+}
 
 .custom-btn{
     background-color: $color-tertiary;
     text-align: center;
     color: white;
+    font-size: 1rem;
 }
 .custom-btn:hover{
     background-color: $color-secondary;

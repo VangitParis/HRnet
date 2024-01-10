@@ -8,7 +8,7 @@ import {
   useSortBy,
 } from "react-table";
 import { tableColumns } from "../../utils/tableData";
-import "../../styles/sass/components/_employeeTable.scss"; // Ajout de l'import pour vos styles
+import "../../styles/sass/components/_employeeTable.scss";
 import { Link } from "react-router-dom";
 
 export default function EmployeeTable({ data }) {
@@ -24,18 +24,17 @@ export default function EmployeeTable({ data }) {
     page,
     prepareRow,
     setGlobalFilter,
-    state : { pageIndex, pageSize, globalFilter },
+    state: { pageIndex, pageSize, globalFilter },
     setPageSize,
     previousPage,
     nextPage,
   } = useTable(
-   
     {
       columns: tableColumns,
       data: tableData,
       initialState: { pageSize: 10 }, //initial pageSize=10
     },
-   
+
     useGlobalFilter,
     useSortBy,
     usePagination
@@ -120,12 +119,14 @@ export default function EmployeeTable({ data }) {
         aria-live="polite"
       >
         {/* Afficher le nombre d'éléments affichés dans la page actuelle par rapport au nombre total d'éléments dans le tableau */}
-        {`Showing ${page.length >0 ? pageIndex * pageSize + 1 : 0} to ${Math.min(
-          (pageIndex + 1) * pageSize,
-          page.length
-        ) } of ${ rows.length } entries`}
-       
-        {rows.length && globalFilter &&
+        {`Showing ${
+          page.length > 0 ? pageIndex * pageSize + 1 : 0
+        } to ${Math.min((pageIndex + 1) * pageSize, page.length)} of ${
+          rows.length
+        } entries`}
+
+        {rows.length &&
+          globalFilter &&
           ` (filtered from ${tableData.length} total entries)`}
 
         <div className="pagination d-flex">
@@ -136,11 +137,9 @@ export default function EmployeeTable({ data }) {
           >
             Previous
           </Link>{" "}
-          <span>
-            <Link className="paginate_button current">{pageIndex + 1}</Link>
-          </span>
+          <Link className="paginate_button current">{pageIndex + 1}</Link>
           <Link
-            className="paginate_button next"
+            className="paginate_button next ml-1"
             onClick={() => nextPage()}
             disabled={pageIndex - 1}
           >
