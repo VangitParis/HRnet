@@ -161,27 +161,28 @@ export default function Form() {
           Date of Birth
         </label>
         <DatePicker
+          id="date-of-birth"
           inputRef={inputRef}
           dateFormat={"dd/MM/yyyy"}
           fontSize="1rem"
-          id="date-of-birth"
           minYear={2000}
           maxYear={2025}
           language={"en-EN"}
           errorClass="invalid-feedback col-md-1"
           value={formState.dateOfBirth}
           calendarWidth="330px"
-          onSelect={(selectedDate) =>
-            handleDateChange("dateOfBirth", selectedDate)
-          }
-          inputClassName={`form-control ${
-            formState.dateOfBirth &&
-            !isDateInputValid(formState.dateOfBirth) &&
-            "is-invalid"
-          } `}
+          // onSelect={(e) =>
+          //   handleDateChange("dateOfBirth", e.target.value)
+          // }
+          customInputClass={{
+            className :`form-control custom-input-class${ formState.dateOfBirth && !isDateInputValid(formState.dateOfBirth)
+              ? "is-invalid"
+              : ""
+            }`
+          }}
           onChange={(e) => handleDateChange("dateOfBirth", e.target.value)}
-          monthSelectClass="custom-month-select-class"
-          yearSelectClass="custom-year-select-class"
+          monthSelectClass="custom-month-select-style"
+          yearSelectClass="custom-year-select-style"
           required
         />
         {formState.dateOfBirth && !isDateInputValid(formState.dateOfBirth) && (

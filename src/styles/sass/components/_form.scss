@@ -16,18 +16,24 @@
 .input-date:focus-visible {
     outline:inherit;
 }
+.custom-input-class{
+    font-size: 1rem;
+    padding: 6px;
+ 
+}
 
 fieldset{
     position: relative;
     z-index: 1;
 }
-.custom-month-select-class, .custom-year-select-class{
+.custom-month-select-style, .custom-year-select-style{
     font-size: 1rem;
-    color: black;
-    background-color: $background-white;
+    color: white;
+    background-color: $color-primary;
     height: 30px;
     font-weight: 500;
     padding: 0 10px;
+    text-align: center;
 }
 
 .custom-button-style{
