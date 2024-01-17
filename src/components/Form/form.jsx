@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { saveEmployee } from "../../features/employeesSlice";
 import {
+  formatDate,
   isTextInputValid,
   isAddressInputValid,
   isZipCodeValid,
@@ -18,7 +19,6 @@ export default function Form() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  //Définition des champs
   const fieldNames = [
     "firstName",
     "lastName",
@@ -30,6 +30,7 @@ export default function Form() {
     "state",
     "zipCode",
   ];
+
   //initialState créé avec la méthode reduce pour créer un objet d'état initial
   //avec chaque champ initialisé à une chaîne vide
   const initialState = fieldNames.reduce((state, fieldName) => {
@@ -39,11 +40,9 @@ export default function Form() {
 
   //État global du formulaire avec useState
   const [formState, setFormState] = useState(initialState);
-
   // Bootstrap validation des champs pour appliquer le style
   const forms = document.querySelectorAll(".needs-validation");
 
-  //fonction pour mettre à jour un champ du formulaire sans modifier l'état
   const handleChange = (fieldName, value) => {
     setFormState((prevState) => ({
       ...prevState,
@@ -51,11 +50,11 @@ export default function Form() {
     }));
   };
 
-  const handleDateChange = (fieldName, date, classList) => {
-    if (isDateInputValid(date)) {
-      handleChange(fieldName, date);
-    } else {
-      console.error("Invalid date format");
+  // Utilisation de la fonction de formatage dans handleDateChange
+  const handleDateChange = (fieldName, date) => {
+    const formattedDate = formatDate(date);
+    if (isDateInputValid(formattedDate)) {
+      handleChange(fieldName, formattedDate)
     }
   };
 
@@ -80,6 +79,7 @@ export default function Form() {
 
     // Si des champs ne sont pas valides, interrompre la soumission du formulaire
     if (!areFieldsValid) {
+      console.log(areFieldsValid);
       return;
     }
 
@@ -106,6 +106,7 @@ export default function Form() {
       noValidate
       onSubmit={handleSaveEmployee}
     >
+      {/* FirstName */}
       <div className="col-md-6 p-1">
         <label htmlFor="first-name" className="form-label fw-bold">
           First Name
@@ -131,6 +132,7 @@ export default function Form() {
         )}
       </div>
 
+      {/* LastName */}
       <div className="col-md-6 p-1">
         <label htmlFor="last-name" className="form-label fw-bold">
           Last Name
@@ -156,67 +158,88 @@ export default function Form() {
         )}
       </div>
 
+      {/* DatePicker Input dateOfBirth*/}
       <div className="col-md-6 p-1">
         <label htmlFor="date-of-birth" className="form-label fw-bold">
           Date of Birth
         </label>
         <DatePicker
           id="date-of-birth"
-          inputRef={inputRef}
+          type="text"
+          showCurrentDateOnMount={false}
           dateFormat={"dd/MM/yyyy"}
-          fontSize="1rem"
-          minYear={2000}
-          maxYear={2025}
+          minYear={1980}
+          maxYear={2024}
           language={"en-EN"}
-          errorClass="invalid-feedback col-md-1"
           value={formState.dateOfBirth}
-          calendarWidth="330px"
-          // onSelect={(e) =>
-          //   handleDateChange("dateOfBirth", e.target.value)
-          // }
-          customInputClass={{
-            className :`form-control custom-input-class${ formState.dateOfBirth && !isDateInputValid(formState.dateOfBirth)
-              ? "is-invalid"
-              : ""
-            }`
+          onChange={(date) => {
+            console.log(
+              "DatePicker value changed. New value:",
+              !isDateInputValid(date)
+            );
+            handleDateChange("dateOfBirth", date);
           }}
-          onChange={(e) => handleDateChange("dateOfBirth", e.target.value)}
+          customInputClass={{
+            className: `form-control custom-input-class ${
+              formState.dateOfBirth && !isDateInputValid(formState.dateOfBirth) &&
+                "is-invalid"
+                
+            }`,
+          }}
           monthSelectClass="custom-month-select-style"
           yearSelectClass="custom-year-select-style"
+          errorClass={`invalid-feedback col-md-12
+  ${
+    formState.dateOfBirth && !isDateInputValid(formState.dateOfBirth)
+      ? "d-none"
+      : "d-block"
+  }`}
+          errorMessage="Please provide a valid Date of Birth"
           required
         />
-        {formState.dateOfBirth && !isDateInputValid(formState.dateOfBirth) && (
-          <div className={`errorClass`}>
-            Please provide a valid Date of Birth.
-          </div>
-        )}
       </div>
 
+      {/* DatePicker Input startDate*/}
       <div className="col-md-6 p-1">
         <label htmlFor="start-date" className="form-label fw-bold">
           Start Date
         </label>
-        <input
+        <DatePicker
           id="start-date"
-          type="date"
-          className={`form-control ${
-            formState.startDate &&
-            !isDateInputValid(formState.startDate) &&
-            "is-invalid"
-          }`}
+          type="text"
+          showCurrentDateOnMount={false}
+          inputRef={inputRef}
+          dateFormat={"dd/MM/yyyy"}
+          minYear={2000}
+          maxYear={2025}
+          language={"en-EN"}
           value={formState.startDate}
-          onChange={(e) => handleDateChange("startDate", e.target.value)}
+          onChange={(date) => handleDateChange("startDate", date)}
+          customInputClass={{
+            className: `form-control custom-input-class 
+            ${
+              formState.startDate && !isDateInputValid(formState.startDate)
+                ? "is-invalid"
+                : ""
+            }`,
+          }}
+          monthSelectClass="custom-month-select-style"
+          yearSelectClass="custom-year-select-style"
+          errorClass={`invalid-feedback col-md-12
+          ${
+            formState.startDate && !isDateInputValid(formState.startDate)
+              ? "d-none"
+              : "d-block"
+          }`}
+          errorMessage="Please provide a valid Date of Birth"
           required
         />
-        {formState.startDate && !isDateInputValid(formState.startDate) && (
-          <div className="invalid-feedback col-md-1">
-            Please provide a valid Date.
-          </div>
-        )}
       </div>
-
+      {/* Start Fieldset : Address */}
       <fieldset className="row gy-2 gx-0 align-items-center">
         <legend className="p-1 mb-0">Address</legend>
+
+        {/* Street */}
         <div className="col-md-6 col-lg-12 p-1">
           <label htmlFor="street" className="form-label fw-bold">
             Street
@@ -240,6 +263,8 @@ export default function Form() {
             </div>
           )}
         </div>
+
+        {/* City */}
         <div className="row gx-0 gy-1">
           <div className="col-md-8 col-lg-4 p-1">
             <label className="form-label fw-bold" htmlFor="city">
@@ -265,6 +290,7 @@ export default function Form() {
             )}
           </div>
 
+          {/* Dropdown State */}
           <div className="col-md-8 col-lg-4 p-1">
             <label className="form-label fw-bold" htmlFor="state">
               State
@@ -273,6 +299,11 @@ export default function Form() {
               id="state"
               name="state"
               value={formState.state !== undefined ? formState.state : null}
+              className={`form-control ${
+                formState.state &&
+                !isTextInputValid(formState.state) &&
+                "is-invalid"
+              }`}
               autoComplete="address-level1"
               onChange={(selectedValue) => {
                 handleChange("state", selectedValue.value.toString());
@@ -281,6 +312,7 @@ export default function Form() {
             <div className="invalid-tooltip">Please select a valid state.</div>
           </div>
 
+          {/* Zip code */}
           <div className="col-md-8 col-lg-4 p-1">
             <label className="form-label fw-bold" htmlFor="zip-code">
               Zip Code
@@ -306,7 +338,9 @@ export default function Form() {
           </div>
         </div>
       </fieldset>
+      {/* End Fieldset */}
 
+      {/* Dropdown department */}
       <div className="col-auto col-md-12 col-lg-12 p-1 gx-0">
         <label htmlFor="department" className="form-label fw-bold">
           Department
@@ -318,11 +352,18 @@ export default function Form() {
           onChange={(selectedValue) =>
             handleChange("department", selectedValue.value)
           }
+          className={`form-control ${
+            formState.department &&
+            !isTextInputValid(formState.department) &&
+            "is-invalid"
+          }`}
           required
           autoComplete="off"
         />
         <div className="invalid-tooltip">Please select a valid state.</div>
       </div>
+
+      {/* Button Submit */}
       <div className="col-12">
         <div className="d-grid gap-2 mx-auto mb-5 mt-5 col-md-3">
           <button type="submit" className="btn custom-btn fw-bold">
@@ -330,6 +371,8 @@ export default function Form() {
           </button>
         </div>
       </div>
+
+      {/* Modal */}
       <div>
         <ModalApp modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
       </div>

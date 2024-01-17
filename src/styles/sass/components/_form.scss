@@ -1,5 +1,40 @@
 @import '../utils/mixins';
 
+
+form#create-employee{
+    width: 100%;
+    @include respond-to($breakpoint-md) {
+      width: 50%; 
+    }
+    z-index: 0;
+  }
+  
+  .form-control{
+      border-radius: 5px;
+      border: 1px solid $color-primary;
+      box-sizing: border-box;
+    
+  }
+
+  .inputStyle{
+    border-radius: 5px;
+    border: 1px solid $color-primary;
+}
+
+.custom-btn{
+    background-color: $color-tertiary;
+    text-align: center;
+    color: white;
+    font-size: 1rem;
+}
+.custom-btn:hover{
+    background-color: $color-secondary;
+}
+.custom-bg{
+    background-color: $color-primary;
+    border-radius: 5px;
+}
+
 .calendar-icon{
     font-size: 1rem;
     color: black;
@@ -7,7 +42,7 @@
     position: absolute;
     right: 0;
     top: 40px;
-    left: 90%;
+    left: 80%;
     cursor: pointer;
 }
 .input-container{
@@ -18,8 +53,8 @@
 }
 .custom-input-class{
     font-size: 1rem;
-    padding: 6px;
- 
+    padding: 6px 8px;
+    
 }
 
 fieldset{

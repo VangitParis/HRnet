@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import states from "../../utils/states";
 import departments from "../../utils/departments";
+import '../../styles/sass/components/_dropdown.scss';
 
-export default function Dropdown({ value, onChange, id }) {
+export default function Dropdown({ value, onChange, id, className }) {
     const [selectedOption, setSelectedOption] = useState(value || null);
-    
-    
     const [inputValue, setInputValue] = useState("");
 
     useEffect(() => {
@@ -36,15 +35,25 @@ export default function Dropdown({ value, onChange, id }) {
         setInputValue(selectedOption ? selectedOption.label : "");
         onChange(selectedOption);
     };
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            border: "none",
+            minHeight:0,
+            
+          
+        }),
+
+    };
 
     return (
         <Select
-            autoFocus
             onChange={handleChange}
             options={options}
             value={selectedOption || inputValue}
             hideSelectedOptions={false}
-
+            className={`custom-dropdown ${className}`}  
+            styles={customStyles}
         />
     
     );

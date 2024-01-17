@@ -7,6 +7,26 @@ export function getAbbreviationFromState(state) {
   return stateEntry ? stateEntry.abbreviation : null;
 }
 
+
+export const formatDate = (date, format = "dd/MM/yyyy") => {
+  if (!date) {
+    return ''; // Retourne une chaîne vide si la date est null ou undefined
+  }
+
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+
+  // Replace placeholders in the format with actual values
+  let formattedDate = format.replace("dd", day);
+  formattedDate = formattedDate.replace("MM", month);
+  formattedDate = formattedDate.replace("yyyy", year);
+
+  return formattedDate;
+};
+
+
+
 // Validation form inputs avec des Regex
 
 export const isTextInputValid = (firstName, lastName, city) => {

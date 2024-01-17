@@ -1,3 +1,10 @@
-// .css-d7l1ni-option{
-//     color: black;
-// }
+@import '../utils/mixins';
+@import '../utils/variables';
+
+.custom-dropdown{
+    padding: 0px;
+    box-shadow: none;
+    outline: inherit;
+}
+
+
