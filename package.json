@@ -1,7 +1,6 @@
 {
   "name": "hrnet",
   "version": "0.1.1",
-  "homepage": "https://vangitparis.github.io/HRnet",
   "private": false,
 
   "scripts": {
