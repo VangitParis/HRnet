@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import { store } from "./utils/store";
 import Header from "./components/Layouts/Header/header";
 import Home from "./pages/Home/home.jsx";
-import Form from "./components/Form/form.jsx";
 
 // Suite de tests pour le lien vers la page /employee-list dans le composant Header
 describe("Link to Employee List Page in Header Component", () => {
