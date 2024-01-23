@@ -3,7 +3,14 @@ import { mockTableData } from "../utils/tableData";
 import { callApi } from "./apicall";
 import { getAbbreviationFromState } from "../modelisation/modelisation";
 
-const baseUrl = `https://hrnet-react.netlify.app/employee-list`;
+// Déterminer si l'application est en mode développement
+const isDevelopment = process.env.NODE_ENV === "development";
+
+// Base URL pour le mode de développement
+const developmentBaseUrl = "http://localhost:3000/HRnet/";
+
+// Base URL pour le mode de production (Netlify)
+const productionBaseUrl = "/";
 
 // Activation du mock ==>  true === 1 === actif, false === 0 === inactif
 let shouldUseMockData = Boolean(Number(process.env.REACT_APP_SHOULD_USE_MOCK_DATA));
@@ -12,10 +19,12 @@ let shouldUseMockData = Boolean(Number(process.env.REACT_APP_SHOULD_USE_MOCK_DAT
 export const getMockEmployeeData = createAsyncThunk(
   "employees/getEmployeesMockList",
   async (_, { rejectWithValue }) => {
-    const url = `${baseUrl}`;
+    const baseUrl = isDevelopment ? developmentBaseUrl : productionBaseUrl;
+    const url = baseUrl;
+
 
     if (shouldUseMockData) {
-      // Utilisez updatedDates pour créer mockData avec les dates formatées
+      // Utiliser updatedDates pour créer mockData avec les dates formatées
       const mockData = mockTableData.employees.map((employee) => {
         // Copier les propriétés de l'employé
         const formattedEmployee = { ...employee };
@@ -27,7 +36,7 @@ export const getMockEmployeeData = createAsyncThunk(
         return formattedEmployee;
       });
     
-      // Utilisez mockData comme données formatées
+      // Utiliser mockData comme données formatées
       console.log("Mock Data avec dates formatées et État abrégé:", mockData);
     
       // Vérifiez si mockData est défini avant de l'utiliser
@@ -35,12 +44,10 @@ export const getMockEmployeeData = createAsyncThunk(
         throw new Error("Données non reconnues");
       }
     
-      // Utilisez mockData comme données formatées dans le reste de votre application
+      // Utiliser mockData comme données formatées 
       return mockData;
     }
     
-    
-
     try {
       const response = await callApi(url);
       return response.status === 200 ? response.data : [];
