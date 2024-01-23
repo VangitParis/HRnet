@@ -225,7 +225,7 @@ export default function Form() {
         <DatePicker
           id="date-of-birth"
           type="text"
-          placeholder="dd/mm/yyyy"
+          placeholder=""
           inputRef={inputRef}
           showCurrentDateOnMount={false}
           dateFormat={"dd/MM/yyyy"}
