@@ -1,7 +1,7 @@
 {
   "name": "hrnet",
   "version": "0.1.1",
-  "homepage": "https://vangitparis.github.io/HRnet",
+  "homepage": "https://hrnet-react.netlify.app/",
   "private": false,
 
   "scripts": {
