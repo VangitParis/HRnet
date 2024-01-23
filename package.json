@@ -5,7 +5,7 @@
 
   "scripts": {
     "start": "react-scripts start ",
-    "build": "react-scripts build --basename='/'",
+    "build": "react-scripts build --basename='/HRnet'",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
