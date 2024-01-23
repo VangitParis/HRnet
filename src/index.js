@@ -7,14 +7,14 @@ import { store } from "./utils/store";
 import Header from "./components/Layouts/Header/header";
 import App from "./components/Router/App";
 import ReactModal from 'react-modal';
+import { basename } from "./config";
 import './styles/sass/main.scss';
 
 
 
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-ReactModal.setAppElement('#root'); // ou tout autre élément auquel votre application est attachée
+ReactModal.setAppElement('#root'); 
 
-const basename = process.env.NODE_ENV === "development" ? "/" : "/HRnet";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
