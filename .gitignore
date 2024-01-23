@@ -2,16 +2,19 @@
 
 # dependencies
 .vscode/
+.github
+.firebase
 /node_modules
 /.pnp
 .pnp.js
-
+/y
 
 # testing
 /coverage
 
 # production
 /build
+
 
 # misc
 .DS_Store
