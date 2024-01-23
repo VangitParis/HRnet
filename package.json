@@ -1,7 +1,6 @@
 {
   "name": "hrnet",
   "version": "0.1.1",
-  "homepage": "https://hrnet-react.netlify.app",
   "private": false,
 
   "scripts": {
