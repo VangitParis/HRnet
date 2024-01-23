@@ -1,23 +1,32 @@
-import { getAbbreviationFromState } from "../modelisation/modelisation";
+import {
+  getAbbreviationFromState
+} from "../modelisation/modelisation";
+
+
+
 
 export const tableColumns = [
   { Header: "First Name", accessor: "firstName" },
   { Header: "Last Name", accessor: "lastName" },
-  { Header: "Start Date", accessor: "startDate" },
+  { Header: "Start Date", accessor: "startDate"},
   { Header: "Department", accessor: "department" },
-  { Header: "Date of Birth", accessor: "dateOfBirth" },
+  { Header: "Date of Birth", accessor: "dateOfBirth"},
   { Header: "Street", accessor: "street" },
   { Header: "City", accessor: "city" },
   { Header: "State", accessor: "state" },
   { Header: "Zip Code", accessor: "zipCode" },
 ];
 
+
+
+
+
 export const mockTableData = {
   employees: [
     {
       firstName: "Jane",
       lastName: "Doe",
-      startDate: "20/11/2023",
+      startDate: "01/11/2003",
       department: "Sales",
       dateOfBirth: "08/08/2008",
       street: "123 Main St",
@@ -29,7 +38,7 @@ export const mockTableData = {
     {
       firstName: "Alice",
       lastName: "Smith",
-      startDate: "20/11/2023",
+      startDate: "18/01/2020",
       department: "Marketing",
       dateOfBirth: "15/03/1995",
       street: "456 Oak St",
@@ -41,7 +50,7 @@ export const mockTableData = {
     {
       firstName: "John",
       lastName: "Johnson",
-      startDate: "20/11/2023",
+      startDate: "02/01/2022",
       department: "Finance",
       dateOfBirth: "22/09/1980",
       street: "789 Elm St",
@@ -53,7 +62,7 @@ export const mockTableData = {
     {
       firstName: "Emily",
       lastName: "Williams",
-      startDate: "20/11/2023",
+      startDate: "19/08/2009",
       department: "IT",
       dateOfBirth: "10/05/1992",
       street: "101 Pine St",
@@ -65,7 +74,7 @@ export const mockTableData = {
     {
       firstName: "Michael",
       lastName: "Brown",
-      startDate: "20/11/2023",
+      startDate: "05/10/2019",
       department: "Human Resources",
       dateOfBirth: "03/12/1977",
       street: "202 Cedar St",
@@ -77,7 +86,7 @@ export const mockTableData = {
     {
       firstName: "Olivia",
       lastName: "Miller",
-      startDate: "20/11/2023",
+      startDate: "20/09/2017",
       department: "Customer Service",
       dateOfBirth: "18/06/1985",
       street: "303 Maple St",
@@ -89,7 +98,7 @@ export const mockTableData = {
     {
       firstName: "Daniel",
       lastName: "Jones",
-      startDate: "20/11/2023",
+      startDate: "30/06/2016",
       department: "Operations",
       dateOfBirth: "25/01/1990",
       street: "404 Birch St",
@@ -101,7 +110,7 @@ export const mockTableData = {
     {
       firstName: "Sophia",
       lastName: "Davis",
-      startDate: "20/11/2023",
+      startDate: "06/07/2023",
       department: "Engineering",
       dateOfBirth: "07/04/1982",
       street: "505 Spruce St",
@@ -113,7 +122,7 @@ export const mockTableData = {
     {
       firstName: "Ethan",
       lastName: "Moore",
-      startDate: "20/11/2023",
+      startDate: "03/01/2024",
       department: "Research and Development",
       dateOfBirth: "30/11/1998",
       street: "606 Walnut St",
@@ -125,7 +134,7 @@ export const mockTableData = {
     {
       firstName: "Ava",
       lastName: "Clark",
-      startDate: "20/11/2023",
+      startDate: "10/12/2022",
       department: "Legal",
       dateOfBirth: "12/08/1972",
       street: "707 Fir St",
@@ -137,7 +146,7 @@ export const mockTableData = {
     {
       firstName: "Liam",
       lastName: "Taylor",
-      startDate: "20/11/2023",
+      startDate: "16/04/2021",
       department: "Quality Assurance",
       dateOfBirth: "23/04/1987",
       street: "808 Pine St",
@@ -149,7 +158,7 @@ export const mockTableData = {
     {
       firstName: "Emma",
       lastName: "Hall",
-      startDate: "20/11/2023",
+      startDate: "18/03/2018",
       department: "Public Relations",
       dateOfBirth: "14/02/2000",
       street: "909 Oak St",
@@ -161,7 +170,7 @@ export const mockTableData = {
     {
       firstName: "Noah",
       lastName: "Anderson",
-      startDate: "20/11/2023",
+      startDate: "09/02/2020",
       department: "Supply Chain",
       dateOfBirth: "09/10/1993",
       street: "111 Pine St",
@@ -173,7 +182,7 @@ export const mockTableData = {
     {
       firstName: "Isabella",
       lastName: "Wright",
-      startDate: "20/11/2023",
+      startDate: "17/07/2015",
       department: "Logistics",
       dateOfBirth: "26/06/1989",
       street: "222 Cedar St",
@@ -185,7 +194,7 @@ export const mockTableData = {
     {
       firstName: "Mason",
       lastName: "Evans",
-      startDate: "20/11/2023",
+      startDate: "26/09/2012",
       department: "Training",
       dateOfBirth: "05/03/1975",
       street: "333 Elm St",
@@ -229,8 +238,7 @@ export const mockTableData = {
   ],
 };
 
-const employeeState = mockTableData.employees[0].state; // "Californie"
-console.log(employeeState);
 
-const stateAbbreviation = getAbbreviationFromState(employeeState);
-console.log(stateAbbreviation);
+
+export const employeeState = mockTableData.employees[0].state;
+export const stateAbbreviation = getAbbreviationFromState(employeeState);

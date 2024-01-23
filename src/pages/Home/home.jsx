@@ -1,12 +1,32 @@
-import React from "react";
-import "../../styles/sass/pages/_home.scss";
+import React, { useEffect, useState } from 'react';
 
+import "../../styles/sass/pages/_home.scss";
+import backgroundImage from '../../assets/wave.png';
 
 import Form from "../../components/Form/form";
 
 export default function Home() {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  useEffect(() => {
+    const image = new Image();
+
+    image.src = backgroundImage;
+
+    image.onload = () => {
+      setImageLoaded(true);
+    };
+
+    return () => {
+      image.onload = null;
+    };
+  }, []);
+
+  const gradientBackgroundStyle = {
+    backgroundImage: imageLoaded ? `url(${backgroundImage})` : 'none' ,
+  };
   return (
-    <main className="container-fluid gradient-background mt-0 d-flex flex-column justify-content">
+    <main className="container-fluid gradient-background mt-0 d-flex flex-column justify-content" style={gradientBackgroundStyle}>
       <h1 className="text-center">Create Employee</h1>
       <div className="d-flex align-items-center mt-5 flex-lg-row flex-column">
         <Form />

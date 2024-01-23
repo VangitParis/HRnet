@@ -1,18 +1,36 @@
 @import '../utils/mixins';
+@import '../utils/variables';
 
 .employee-table{
-    margin-top: 50px;
+    margin-top: 60px;
 
 }
 .custom-table{
-width: 80%;
-border: 3px solid $color-primary;
-border-radius: 5px;
+    table-layout: fixed;
+    border: 3px solid $color-primary;
+    border-radius: 5px;
+    >thead{
+        vertical-align: middle;
+    }
+ 
+}
 
+.custom-header {
+    font-size: 13.5px;
+  
+    @include respond-to($breakpoint-xl) {
+        font-size: 16px;
+    }
+  }
+
+.custom-cells{
+    font-size: 13px;
+  
+    @include respond-to($breakpoint-xl) {
+        font-size: 15px;
+    }
 }
-.custom-header{
- font-size: 1.1rem;
-}
+
 
 a{
     text-decoration: none;
@@ -25,8 +43,8 @@ a:hover{
 .search{
     align-items: center;
     justify-content: space-between;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 0;
+    margin-right: 0;
     >label>input{
         border-color: $color-primary;
         border-radius: 5px;
@@ -34,19 +52,28 @@ a:hover{
 }
 .pagination{
     justify-content: space-between;
-    width: 17%;
+    width: 10%;
     align-items: center;
+    @include respond-to($breakpoint-xl) {
+        width: 8%;
+    }
 }
 .current{
     border: 1px solid;
     color: black;
     padding: 0.5% 3%;
+    font-size: 13px;
 
 }
 
 .custom-info{
     align-items: center;
     justify-content: space-between;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 5px;
+    font-size: 13px;
+    @include respond-to($breakpoint-xl) {
+        font-size: 14px
+    }
 }

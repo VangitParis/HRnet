@@ -1,21 +1,42 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import { validateAndFormatDate } from "../../modelisation/modelisation";
+
 import {
   useTable,
   usePagination,
   useGlobalFilter,
   useSortBy,
 } from "react-table";
-import { tableColumns } from "../../utils/tableData";
+import {
+  tableColumns,
+  mockTableData,
+} from "../../utils/tableData";
 import "../../styles/sass/components/_employeeTable.scss";
 import { Link } from "react-router-dom";
 
+
 export default function EmployeeTable({ data }) {
-  const tableData = data;
+  const customDateSort = (rowA, rowB, columnId, sortDesc) => {
+    const dateA = validateAndFormatDate(rowA.values[columnId], "dd/MM/yyyy", new Date());
+    const dateB = validateAndFormatDate(rowB.values[columnId], "dd/MM/yyyy", new Date());
 
-  // Ajouter une fonction pour inclure l'espace après la saisie du texte
+    // On soustrait dateB de dateA pour obtenir l'ordre correct
+    const comparison = dateA - dateB;
+    // console.log("Date A:", dateA);
+    // console.log("Date B:", dateB);
+    // console.log("Comparison:", comparison);
+    if (sortDesc) {
+      // console.log("Sort Descending");
+      return comparison * -1; // Inverser l'ordre pour le tri descendant
+    } else {
+      // console.log("Sort Ascending");
+      return comparison;
+    }
+  };
 
+  // console.log("Data:", data);
   const {
     getTableProps,
     getTableBodyProps,
@@ -31,14 +52,34 @@ export default function EmployeeTable({ data }) {
   } = useTable(
     {
       columns: tableColumns,
-      data: tableData,
+      data,
+      customSortType: { customDateSort },
       initialState: { pageSize: 10 }, //initial pageSize=10
     },
-
     useGlobalFilter,
     useSortBy,
     usePagination
   );
+  // Modifier la configuration de tri pour la colonne "Start Date"
+  const startDateColumn = headerGroups[0].headers.find(
+    (column) => column.id === "startDate"
+  );
+  startDateColumn.sortType = (rowA, rowB) =>
+    customDateSort(rowA, rowB, "startDate", startDateColumn.isSortedAsc);
+
+  // Ajouter des console log pour déboguer
+  // console.log("Header Groups:", headerGroups);
+
+  // Modifier la configuration de la colonne "Date of Birth" après la création de la table
+  const dateOfBirthColumn = headerGroups[0].headers.find(
+    (column) => column.id === "dateOfBirth"
+  );
+  dateOfBirthColumn.sortType = (rowA, rowB) =>
+    customDateSort(rowA, rowB, "dateOfBirth", dateOfBirthColumn.isSortedAsc);
+
+  // console log pour déboguer
+  // console.log("Header Groups:", headerGroups);
+
   return (
     <div className="employee-table table-responsive-sm">
       <div className="d-flex search">
@@ -84,14 +125,10 @@ export default function EmployeeTable({ data }) {
                 >
                   {column.render("Header")}
                   <span>
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <FontAwesomeIcon icon={faSortDown} />
-                      ) : (
-                        <FontAwesomeIcon icon={faSortUp} />
-                      )
-                    ) : (
-                      ""
+                    {column.isSorted && (
+                      <FontAwesomeIcon
+                        icon={column.isSortedDesc ? faSortDown : faSortUp}
+                      />
                     )}
                   </span>
                 </th>
@@ -105,7 +142,9 @@ export default function EmployeeTable({ data }) {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  <td {...cell.getCellProps()} className="custom-cells">
+                    {cell.render("Cell")}
+                  </td>
                 ))}
               </tr>
             );
@@ -127,7 +166,7 @@ export default function EmployeeTable({ data }) {
 
         {rows.length &&
           globalFilter &&
-          ` (filtered from ${tableData.length} total entries)`}
+          ` (filtered from ${mockTableData.length} total entries)`}
 
         <div className="pagination d-flex">
           <Link

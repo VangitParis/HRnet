@@ -1,28 +1,24 @@
 @import '../utils/mixins';
+@import '../utils/variables';
 
 
 form#create-employee{
-    width: 100%;
-    @include respond-to($breakpoint-md) {
-      width: 50%; 
+    margin-top: 3rem;
+    width: 75%;
+    @include respond-to($breakpoint-xl) {
+      width: 55%; 
     }
     z-index: 0;
-  }
-  
-  .form-control{
-      border-radius: 5px;
-      border: 1px solid $color-primary;
-      box-sizing: border-box;
-    
   }
 
   .inputStyle{
     border-radius: 5px;
     border: 1px solid $color-primary;
+   
 }
 
 .custom-btn{
-    background-color: $color-tertiary;
+    background-color: $color-primary;
     text-align: center;
     color: white;
     font-size: 1rem;
@@ -39,12 +35,29 @@ form#create-employee{
     font-size: 1rem;
     color: black;
     bottom: 0;
-    position: absolute;
+    position: relative;
     right: 0;
-    top: 40px;
-    left: 80%;
+    top: -31px;
+    left: 322px;
+
     cursor: pointer;
+    @include max-width($breakpoint-sm) {
+        left: 250px;
+      }
+    @include max-width($breakpoint-md) {
+        left: 227px;
+      }
+    @include respond-to($breakpoint-xl) {
+        left: 337px;
+      }
 }
+
+.calendar-icon:focus{
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25); 
+}
+
 .input-container{
     display: inline;
 }
@@ -54,7 +67,58 @@ form#create-employee{
 .custom-input-class{
     font-size: 1rem;
     padding: 6px 8px;
-    
+}
+
+.form-control{
+    border-radius: 5px;
+    border: 1px solid $color-primary;
+    box-sizing: border-box;
+}
+.input-control{
+    border-radius: 5px;
+    border: 1px solid $color-primary;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+   
+}
+.form-control:focus{
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+.is-invalid{
+        border: 1px solid #b10b1c;
+        padding-right: calc(1.5em + 0.75rem);
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}   
+.is-invalid:focus{
+    border-color: #b10b1c;
+    box-shadow: 0 0 0 0.25rem rgba(220,53,69,.25);
+
+}
+.is-valid{
+    border-color: #198754;
+    padding-right: calc(1.5em + 0.75rem);
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+.invalid-feedback{
+color: #b10b1c;
 }
 
 fieldset{
@@ -68,33 +132,66 @@ fieldset{
     height: 30px;
     font-weight: 500;
     padding: 0 10px;
-    text-align: center;
+    text-align: start;
 }
+
+.custom-month-select-style:focus-visible, .custom-year-select-style:focus-visible, .custom-button-style:focus-visible{
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25); 
+}
+
 
 .custom-button-style{
     background: $color-primary;
 }
-.custom-button-style:hover{
-    background: $color-secondary;
-}
+
 
 .custom-calendar-style{
-    width: 346px;
+    width: 364px;
     height: 200px;
+    font-size: 16px!important;
     z-index: 3;
     position: absolute;
-    top: 340px;
+    top: 390px;
     --border-radius: 5px;
     --accent-br: 5px;
+    @include respond-to($breakpoint-xl){
+        width: 380px;
+        top: 395px;
+    }
     // --side-padding: 10px 20px;
 }
 .custom-date-style.selected::before{
     background-color: $color-primary;
+
 }
 
 .custom-date-style.selected {
     color: white;
   }
+  .custom-date-style:focus {
+   
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+  }
+
 .custom-date-style {
     color: black;
   }
+
+.custom-dropdown-open{
+    background-color: $color-primary;
+    height: max-content;
+    text-align: start;
+    color: white;
+}
+.custom-dropdown-open:focus{
+   
+    background-color: $color-primary;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+

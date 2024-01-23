@@ -1,5 +1,6 @@
 import departments from "../utils/departments";
 import states from "../utils/states";
+// import { parse } from "date-fns";
 
 // Abbreviation
 export function getAbbreviationFromState(state) {
@@ -7,10 +8,9 @@ export function getAbbreviationFromState(state) {
   return stateEntry ? stateEntry.abbreviation : null;
 }
 
-
 export const formatDate = (date, format = "dd/MM/yyyy") => {
   if (!date) {
-    return ''; // Retourne une chaîne vide si la date est null ou undefined
+    return ""; // Retourne une chaîne vide si la date est null ou undefined
   }
 
   const day = date.getDate().toString().padStart(2, "0");
@@ -25,16 +25,15 @@ export const formatDate = (date, format = "dd/MM/yyyy") => {
   return formattedDate;
 };
 
-
-
 // Validation form inputs avec des Regex
 
-export const isTextInputValid = (firstName, lastName, city) => {
-  return /^[A-Za-z]+(['-][A-Za-z]+)?$/.test(firstName, lastName, city);
+export const isTextInputValid = (text) => {
+  const regex = /^[A-Za-z\s]+(['-][A-Za-z]+)?$/;
+  return regex.test(text);
 };
 
 export const isAddressInputValid = (street) => {
-  return /^\s*\S+(?:\s+\S+){2}/.test(street);
+  return /^\s*\d+(?:\s+[A-Za-z]+\s*)+$/.test(street);
 };
 
 export const isZipCodeValid = (zipCode) => {
@@ -58,4 +57,64 @@ departments.sort(function (a, b) {
   }
   return 0;
 });
+// export const isDateValid = (dateString) => {
+//   const dateObject = parse(dateString, "dd/MM/yyyy", new Date());
+//   const isValid = !isNaN(dateObject.getTime());
 
+//   if (!isValid) {
+//     // console.log("Invalid Date:", dateString);
+//   }
+
+//   return isValid;
+// };
+
+export const parseDateString = (dateString) => {
+  const dateObject = new Date(dateString);
+
+  if (isNaN(dateObject.getTime())) {
+    // Si la date n'est pas valide, retourne la chaîne d'origine
+    return dateString;
+  }
+
+  // Formate la date
+  const options = { year: "numeric", month: "numeric", day: "numeric" };
+  const formattedDate = dateObject.toLocaleDateString("default", options);
+
+  return formattedDate;
+};
+
+// Fonction générique pour valider et formater une date
+export const validateAndFormatDate = (dateString) => {
+  const [day, month, year] = dateString.split("/").map(Number);
+
+  // Construire l'objet Date avec le mois réduit de 1
+  const dateValue = new Date(year, month - 1, day);
+
+  // Vérifie si dateValue est une date valide
+  const isValid = dateValue instanceof Date && !isNaN(dateValue);
+
+  if (isValid) {
+    // console.log("Date valide :", dateValue);
+    return dateValue; // Retourne l'objet Date
+  } else {
+    // console.log("Date non valide : ", dateString);
+    return dateString;
+  }
+};
+
+// Exemple d'utilisation
+const dateString =
+  "Sat Jan 30 2003 00:00:00 GMT+0100 (heure normale d’Europe centrale)";
+
+// Vérifier si la date est valide
+// const isValid = validateAndFormatDate(dateString);
+// console.log("Date valide:", isValid);
+
+// Formater la date
+export const formattedDate = parseDateString(dateString);
+// console.log("Date formatée:", formattedDate);
+
+export const formatDateString = (dateString) => {
+  const [day, month, year] = dateString.split("/");
+  return `${day}/${month}/${year}`;
+};

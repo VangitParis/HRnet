@@ -1,20 +1,15 @@
 @import '../utils/mixins';
 @import '../utils/variables';
 
-
-
-
-
 .cover{
     transform: translateY(-71px);
     text-align: center;
 }
 
 .gradient-background {
-   background: $background-image-bottom;
-   background-size: cover;
-   background-position: center;
-   background-color: $color-primary-complement;
+    background: $background-image-bottom-6;
+    background-repeat: no-repeat;
+    background-color: $color-primary-complement;
 }
 
 
@@ -22,3 +17,6 @@
     display: block !important;
 }
 
+h1{
+    font-size: 28px;
+}

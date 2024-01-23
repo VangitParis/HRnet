@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import EmployeeTable from "../../components/Tables/employeeTable";
 import { selectEmployees } from "../../utils/selectors";
-import "../../styles/sass/pages/_employeesList.scss";
 import { getMockEmployeeData } from "../../services/employeesServices";
 
 export default function EmployeeList() {
@@ -23,7 +22,7 @@ export default function EmployeeList() {
   ) : error ? (
     <main className="main">Error: {error}</main>
   ) : (
-    <main className="container-fluid gradient-background_employeeList mt-0 d-flex flex-column justify-content">
+    <main className="container-fluid gradient-background mt-0 d-flex flex-column justify-content">
       <h1 className="mt-1 text-center">Current Employees</h1>
       <EmployeeTable data={newEmployeeList} />
     </main>
