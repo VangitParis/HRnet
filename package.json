@@ -1,12 +1,12 @@
 {
   "name": "hrnet",
   "version": "0.1.1",
-  "homepage": "https://vangitparis.github.io/",
+  "homepage": "https://vangitparis.github.io/HRnet",
   "private": false,
 
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build --basepath=/HRnet",
+    "build": "react-scripts build --basename=/",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
