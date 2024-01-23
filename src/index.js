@@ -7,7 +7,6 @@ import { store } from "./utils/store";
 import Header from "./components/Layouts/Header/header";
 import App from "./components/Router/App";
 import ReactModal from 'react-modal';
-import { basename } from "./config";
 import './styles/sass/main.scss';
 
 
@@ -20,7 +19,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
       <React.StrictMode>
-      <BrowserRouter basename={basename}>
+      <BrowserRouter>
         <Header />
           <App />
         </BrowserRouter>
