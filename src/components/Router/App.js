@@ -7,8 +7,8 @@ import Error from "../../pages/Error/error";
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/employee-list" element={<EmployeeList />} />
+      <Route path="/HRnet" element={<Home />} />
+      <Route path="/HRnet/employee-list" element={<EmployeeList />} />
       <Route path="*" element={<Error />} />
     </Routes>
   );
