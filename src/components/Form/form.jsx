@@ -162,6 +162,7 @@ export default function Form() {
       className="row g-1 mb-md-0 mb-3 mx-auto "
       id="create-employee"
       onSubmit={handleSaveEmployee}
+      data-testid="create-employee-form"
     >
       {/* FirstName */}
       <div className="col-md-6 p-1">
@@ -183,7 +184,7 @@ export default function Form() {
           required
         />
         {formState.firstName && !isTextInputValid(formState.firstName) && (
-          <div className="invalid-feedback col-md-1">
+          <div className="invalid-feedback col-md-1" data-testid="error-message">
             Please provide a valid First Name.
           </div>
         )}

@@ -36,6 +36,7 @@ export default function Header() {
                     className="nav-link active"
                     aria-current="page"
                     to="/employee-list"
+                    data-testid="employee-list-link"
                   >
                     View Current Employees
                   </Link>

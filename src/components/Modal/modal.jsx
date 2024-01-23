@@ -25,6 +25,7 @@ export default function ModalApp({ modalIsOpen, setModalIsOpen }) {
 
   return (
     <Modal
+      data-testid="modal-id"
       isOpen={modalIsOpen}
       onRequestClose={() => setModalIsOpen(false)}
       style={customStyles}
