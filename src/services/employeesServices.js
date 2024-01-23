@@ -3,7 +3,7 @@ import { mockTableData } from "../utils/tableData";
 import { callApi } from "./apicall";
 import { getAbbreviationFromState } from "../modelisation/modelisation";
 
-const baseUrl = `http://localhost:3001`;
+const baseUrl = `http://localhost`;
 
 // Activation du mock ==>  true === 1 === actif, false === 0 === inactif
 let shouldUseMockData = Boolean(Number(process.env.REACT_APP_SHOULD_USE_MOCK_DATA));
