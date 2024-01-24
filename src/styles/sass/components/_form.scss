@@ -3,10 +3,13 @@
 
 
 form#create-employee{
-    margin-top: 3rem;
+    margin-top: 0rem;
     width: 75%;
     @include respond-to($breakpoint-xl) {
       width: 55%; 
+    }
+    @include respond-to($breakpoint-xxl){
+        width: 40%;
     }
     z-index: 0;
   }
@@ -49,6 +52,9 @@ form#create-employee{
       }
     @include respond-to($breakpoint-xl) {
         left: 337px;
+      }
+      @include respond-to($breakpoint-xxl) {
+        left: 454px;
       }
 }
 
@@ -150,7 +156,6 @@ fieldset{
 .custom-calendar-style{
     width: 364px;
     height: 200px;
-    font-size: 16px!important;
     z-index: 3;
     position: absolute;
     top: 390px;
@@ -160,6 +165,11 @@ fieldset{
         width: 380px;
         top: 395px;
     }
+    @include respond-to($breakpoint-xxl){
+        width: 497px;
+        top: 385px;
+    }
+    
     // --side-padding: 10px 20px;
 }
 .custom-date-style.selected::before{

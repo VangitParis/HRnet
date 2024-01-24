@@ -1,5 +1,6 @@
 @import './base/normes';
 @import './utils/mixins';
+@import './utils/variables';
 @import './layouts/header';
 
 @import './pages/error';
@@ -15,4 +16,10 @@ p{
     margin-bottom: 0.25rem;
 }
 
-
+h1{
+    line-height: 9.2rem;
+    font-size: 28px;
+    @include respond-to($breakpoint-xxl){
+        font-size: 36px;
+    }
+}

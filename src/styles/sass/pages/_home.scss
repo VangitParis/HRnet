@@ -7,9 +7,9 @@
 }
 
 .gradient-background {
-    background: $background-image-bottom-6;
     background-repeat: no-repeat;
     background-color: $color-primary-complement;
+    background-size: cover;
 }
 
 
@@ -17,6 +17,3 @@
     display: block !important;
 }
 
-h1{
-    font-size: 28px;
-}

@@ -20,7 +20,7 @@ export default function Home() {
     return () => {
       image.onload = null;
     };
-  }, []);
+  }, [imageLoaded]);
 
   const gradientBackgroundStyle = {
     backgroundImage: imageLoaded ? `url(${backgroundImage})` : 'none' ,
