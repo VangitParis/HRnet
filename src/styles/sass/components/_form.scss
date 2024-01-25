@@ -106,7 +106,7 @@ form#create-employee{
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
 }
-.is-invalid{
+.form-control.is-invalid{
         border: 1px solid #b10b1c;
         padding-right: calc(1.5em + 0.75rem);
         background-position: right calc(0.375em + 0.1875rem) center;

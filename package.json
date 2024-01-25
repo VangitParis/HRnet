@@ -7,7 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy":"firebase deploy"
+    "deploy": "firebase deploy"
   },
   "eslintConfig": {
     "extends": [
@@ -40,7 +40,7 @@
     "firebase": "^10.7.2",
     "firebase-tools": "^13.0.3",
     "immer": "^10.0.3",
-    "plugin-datepicker": "^1.1.43",
+    "plugin-datepicker": "^1.1.46",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
