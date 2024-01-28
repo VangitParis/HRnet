@@ -11,7 +11,7 @@ export default function DropdownList({
   className,
   inputId,
 }) {
-  const [selectedOption, setSelectedOption] = useState(value || null);
+  const [selectedOption, setSelectedOption] = useState( null);
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
@@ -19,11 +19,27 @@ export default function DropdownList({
     const firstOption =
       id === "state" ? states[0] : id === "department" ? departments[0] : null;
 
-    setSelectedOption({
-      value: firstOption ? firstOption.value : null,
-      label: firstOption ? firstOption.name : null,
-    });
-  }, [id]);
+    const defaultOption = {
+      value: firstOption ? firstOption.abbreviation || firstOption.value : null,
+      label: firstOption ? firstOption.name || firstOption.value : null,
+    };
+
+    // Valide et stocke la première valeur si elle est différente de la valeur actuelle
+    if (
+      !selectedOption && 
+      (defaultOption.value !== selectedOption?.value ||
+        defaultOption.name !== selectedOption?.name)
+    ) {
+      setSelectedOption(defaultOption);
+      setInputValue(defaultOption.value);
+      onChange(defaultOption);
+    }
+    if (value === "") {
+      setSelectedOption(defaultOption);
+      setInputValue(defaultOption.value);
+      onChange(defaultOption);
+    }
+  }, [id, selectedOption, onChange, value]);
 
   const options =
     id === "state"
@@ -38,8 +54,8 @@ export default function DropdownList({
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
-    setInputValue(selectedOption ? selectedOption.label : "");
-    onChange(selectedOption ? selectedOption : null);
+    setInputValue(selectedOption || inputValue);
+    onChange(selectedOption);
   };
   const customStyles = {
     control: (baseStyles, state) => ({

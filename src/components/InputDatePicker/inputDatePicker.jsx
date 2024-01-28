@@ -3,47 +3,72 @@
 import React, { useRef, useState, useEffect } from "react";
 import DatePicker from "plugin-datepicker";
 import "../../styles/sass/components/_form.scss";
-import { formatDate } from "../../modelisation/modelisation";
 
-export default function InputDatePicker({ id, value, onChange, className,fieldName,resetState, required }) {
+export default function InputDatePicker({
+  id,
+  value,
+  onChange,
+  className,
+  fieldName,
+  resetState,
+  required,
+  minYear,
+  maxYear
+}) {
   const inputRef = useRef(null);
-    const [isErrorVisible, setIsErrorVisible] = useState(false);
-    const [minYear, setMinYear] = useState(1950);
-    const [maxYear, setMaxYear] = useState(new Date().getFullYear())
-    const [localValue, setLocalValue] =  useState("", formatDate(new Date()));
-    
-    useEffect(() => {
-      // Set minYear and maxYear based on the field
-      if (fieldName === "startDate") {
-        setMinYear(2000);
-       
-      } else {
-        setMinYear(1950);
-       
-      }
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
+  // const [minYear, setMinYear] = useState(1950);
+  // const [maxYear, setMaxYear] = useState(new Date().getFullYear());
+  const [localValue, setLocalValue] = useState("");
+  const [customKey, setCustomKey] = useState(Date.now());
+  const [wasResetBefore, setWasResetBefore] = useState(false);
+  useEffect(() => {
+    // Set minYear and maxYear based on the field
+    // if (fieldName === "startDate") {
+    //   setMinYear(2000);
      
-        if (localValue) {
-          console.log(formatDate(localValue));
-        setLocalValue("");
-      }
+    // }
+    // if (fieldName === "dateOfBirth") {
+    //   setMinYear(1950);
     
-      // Update isErrorVisible based on the validation logic
-      setIsErrorVisible(!required && !value);
-    }, [required, value, fieldName, resetState, localValue]);
+    // }
+    
+// If resetState transitions from false to true, clear the localValue
+if (resetState && !wasResetBefore) {
+  setCustomKey((prevKey) => prevKey + 1);
+  setLocalValue("");
+  setWasResetBefore(true); // Set a flag to indicate that reset has occurred
+} else if (resetState && !wasResetBefore) {
+  // Reset the flag when resetState goes back to false
+  setWasResetBefore(false);
+  setCustomKey((prevKey) => prevKey + 1);
+  setLocalValue("")
+}
+
+  
+  // Update isErrorVisible based on the validation logic
+  setIsErrorVisible(!required && !value);
+
    
- 
+    
+  }, [required, value, fieldName, onChange, resetState, localValue, wasResetBefore]);
 
   const customStyles = {
-    className: `form-control custom-input-class ${className || ""} ${required && !value ? "is-invalid" : ""}`,
+    className: `form-control custom-input-class ${className || ""} ${
+      required && !value
+    }`,
   };
 
-  const customErrorClass = `invalid-feedback col-md-1 ${!isErrorVisible ? "d-block" : "d-none"}`;
+  const customErrorClass = `invalid-feedback col-md-1 ${
+    isErrorVisible ? "d-block" : "d-none"
+  }`;
 
   const customMessage = "Please provide a valid Date of Birth.";
 
   return (
     <>
       <DatePicker
+        key={customKey}
         inputRef={inputRef}
         id={id}
         type="text"
@@ -59,18 +84,12 @@ export default function InputDatePicker({ id, value, onChange, className,fieldNa
         customInputClass={customStyles}
         errorClass={customErrorClass}
         errorMessage={customMessage}
-        value={value}
-        onChange={(newValue) => {
-            setLocalValue("");
-            onChange(newValue); 
-          }}
-        resetState={resetState}
+        value={resetState ? "" : value} 
+        onChange={onChange}
         required={required}
       />
       {!required && !value && (
-        <div className={customErrorClass}>
-          {customMessage}
-        </div>
+        <div className={customErrorClass}>{customMessage}</div>
       )}
     </>
   );

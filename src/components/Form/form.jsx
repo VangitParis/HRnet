@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { saveEmployee } from "../../features/employeesSlice";
+import { parse, isAfter, isBefore } from "date-fns";
 
 import {
   formatDate,
@@ -28,7 +29,7 @@ export default function Form() {
   const [dateOfBirthError, setDateOfBirthError] = useState(null);
   const [startDateError, setStartDateError] = useState(null);
 
-  const [resetState, setResetDatePicker] = useState(false);
+  const [resetDatePickerState, setResetDatePicker] = useState(false);
 
 
   // initialState créé avec la méthode reduce pour créer un objet d'état initial
@@ -36,8 +37,8 @@ export default function Form() {
   const initialState = {
     firstName: "",
     lastName: "",
-    dateOfBirth: "" || formatDate(new Date()),
-    startDate: "" || formatDate(new Date()),
+    dateOfBirth: "",
+    startDate: "",
     street: "",
     city: "",
     state: "",
@@ -65,141 +66,116 @@ export default function Form() {
       [fieldName]: value,
     }));
   };
+  const updateDate = (newDate, fieldName, minYear, maxYear) => {
+  
+    const isValidDate =
+      newDate &&
+      !isNaN(newDate.getTime()) &&
+      newDate.getFullYear() >= minYear &&
+      newDate.getFullYear() <= maxYear &&
+      newDate.getMonth() >= 0 &&
+      newDate.getMonth() <= 11 &&
+      newDate.getDate() >= 1 &&
+      newDate.getDate() <= new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0).getDate();
+  
+    setIsDateOfBirthValid(fieldName === "dateOfBirth" ? isValidDate : isDateOfBirthValid);
+    setIsStartDateValid(fieldName === "startDate" ? isValidDate : isStartDateValid);
+    if (!isValidDate) {
+     
+      const errorMessage =
+        fieldName === "dateOfBirth"
+          ? "Please provide a valid date of birth."
+          : "Please provide a valid start date.";
+      if (fieldName === "dateOfBirth") {
+        setDateOfBirthError(errorMessage);
+      } else if (fieldName === "startDate") {
+        setStartDateError(errorMessage);
+      }
+    } else {
+      setDateOfBirthError(null);
+      setStartDateError(null);
+    }
+  };
+  
 
   const handleDateChange = (fieldName, date, minYear, maxYear) => {
     const formattedDate = formatDate(date);
-    let isValidField;
-
+    const isValidField = isDateInputValid(formattedDate);
+  
+    handleChange(fieldName, formattedDate);
+    const ageValid = isAgeValid(date);
     if (fieldName === "dateOfBirth") {
-      if (formState.dateOfBirth === null) {
-        console.error("Date of Birth is null.");
-        return;
-      }
-      const minDateOfBirth = new Date();
-      minDateOfBirth.setFullYear(minDateOfBirth.getFullYear() - 18);
-      console.log("Min Date of Birth:", formatDate(minDateOfBirth));
-      console.log("Selected Date of Birth:", formattedDate);
-      isValidField =
-        isDateInputValid(formattedDate) &&
-        date &&
-        date <= minDateOfBirth &&
-        date.getFullYear() <= minDateOfBirth.getFullYear();
-      console.log("Is Date of Birth Valid:", isValidField);
-      setFormState((prevFormState) => ({
-        ...prevFormState,
-        dateOfBirth: formattedDate,
-      }));
+      
+      setIsDateOfBirthValid(isValidField && ageValid);
       setDateOfBirthError(
-        isValidField
+        isValidField && ageValid
           ? null
           : "The date of birth must be a valid date, and you must be at least 18 years old."
       );
-    } else if (fieldName === "startDate") {
-      if (formState.startDate === null) {
-        console.error("StartDate is null.");
-        return;
+      if (ageValid) {
+        updateDate(date, "dateOfBirth", minYear, maxYear);
       }
-      const minStartDate = new Date(formState.dateOfBirth);
-      minStartDate.setFullYear( (minStartDate.getFullYear()) + 18);
-      console.log("Min Start Date:", formatDate(minStartDate));
-      console.log("Selected Start Date:", formattedDate);
-      isValidField =
-        isDateInputValid(formattedDate) &&
-        date &&
-        date >= minStartDate &&
-        date.getFullYear() >= minStartDate.getFullYear();
-      console.log("Is Start Date Valid:", isValidField);
-      setFormState((prevFormState) => ({
-        ...prevFormState,
-        startDate: formatDate(minStartDate),
-      }));
-      setStartDateError(
-        isValidField
-          ? null
-          : "Start date must be a valid date and later than your date of birth."
-      );
-    } else {
-      // Appel de validateDateField avec la valeur de validation préalable si disponible
-      isValidField = validateDateField(
-        formattedDate,
-        date,
-        minYear,
-        maxYear,
-        isValidField
-      );
-    }
-
-    updateValidationState(fieldName, isValidField);
-  };
-
-  const validateDateField = (
-    formattedDate,
-    date,
-    minYear,
-    maxYear,
-    isValid
-  ) => {
-    console.log("Selected Date:", formattedDate);
-
-    // Utilisez la valeur de validation préalable si elle est fournie
-    if (isValid !== undefined && isValid !== null) {
-      return isValid;
-    }
-
-    // Sinon, effectuez la validation habituelle
-    return (
-      isDateInputValid(formattedDate) &&
-      date &&
-      !isNaN(date.getTime()) &&
-      date.getFullYear() >= minYear &&
-      date.getFullYear() <= maxYear &&
-      date.getMonth() >= 0 &&
-      date.getMonth() <= 11 &&
-      date.getDate() >= 1 &&
-      date.getDate() <=
-        new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
-    );
-  };
-
-  const updateValidationState = (fieldName, isValid) => {
-    if (fieldName === "dateOfBirth") {
-      setIsDateOfBirthValid(isValid);
     } else if (fieldName === "startDate") {
-      setIsStartDateValid(isValid);
+  const minAge = 18; 
+      const minStartDate = parse(formState.dateOfBirth, "dd/MM/yyyy", new Date());
+      minStartDate.setFullYear(minStartDate.getFullYear() +18)
+  const currentDate = new Date();
+  const startDate = parse(formattedDate, "dd/MM/yyyy", new Date());
+  const startDateValid =
+    isDateInputValid(formattedDate) &&
+    isAfter(startDate, minStartDate) &&
+    isBefore(startDate, currentDate);
+
+  setIsStartDateValid(isValidField && startDateValid);
+  setStartDateError(
+    isValidField && startDateValid
+      ? null
+      : `Start date must be valid, at least ${minAge} years after your date of birth, and not exceed the current date.`
+  );
+      if (fieldName === "starDate" && startDateValid) {
+        updateDate(startDate, "startDate", minYear, maxYear);
+       } 
+     
     }
+  };
+  const isAgeValid = (birthDate) => {
+    if (!birthDate) {
+      return false;
+    }
+  
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+  
+    return age >= 18;
   };
 
   const handleResetForm = () => {
-    setFormState({ ...initialState });
+    // Réinitialiser la prop resetState pour déclencher la réinitialisation de DatePicker
+    setResetDatePicker(true);
+
+    setFormState(initialState);
     formState.dateOfBirth = ""
     formState.startDate =""
-    // Définir la prop resetState pour déclencher la réinitialisation de DatePicker
-    setResetDatePicker(true);
-    console.log("DATES AFTER RESET", formState.dateOfBirth);
-    console.log("DATES AFTER RESET", initialState);
+   
+    setDateOfBirthError(null);
+    setStartDateError(null);
+
   };
-  
-  
 
   const handleSaveEmployee = async (e) => {
     e.preventDefault();
 
-    console.log("dates value", formState.dateOfBirth, formState.startDate);
     // Vérifier si la date de naissance est vide ou non valide
-    if (!formState.dateOfBirth || !isDateOfBirthValid) {
-      console.error("Date of Birth is invalid or empty.");
+    if (!isDateOfBirthValid) {
       return;
     }
 
     // Vérifier si la date de début est vide ou non valide
     if (!isStartDateValid) {
-      console.error("Start Date is invalid or empty.");
       return;
     }
-
     // Vérifier la validité des champs
     if (!isStateSelected || !isDepartmentSelected) {
-      console.error("State and Department are required.");
       setIsStateSelected(true);
       setIsDepartmentSelected(true);
       return;
@@ -232,9 +208,6 @@ export default function Form() {
 
     // Si des champs ne sont pas valides, interrompre la soumission du formulaire
     if (!areFieldsValid) {
-      console.error("One or more fields are invalid.");
-      console.log(formState.dateOfBirth);
-      console.log("arefieldvalid", areFieldsValid);
       return;
     }
 
@@ -244,14 +217,15 @@ export default function Form() {
       newEmployeeData[fieldName] = formState[fieldName];
     });
 
-    // Ouvrir la Modal
-    setModalIsOpen(true);
-
     // Appel de l'action createEmployeeData avec les données du nouvel employé
     dispatch(saveEmployee(newEmployeeData));
 
     // Réinitialiser les champs
     handleResetForm();
+   
+     // Ouvrir la Modal
+    setModalIsOpen(true);
+
   };
 
   return (
@@ -329,10 +303,12 @@ export default function Form() {
           id="date-of-birth"
           fieldName="dateOfBirth"
           value={formState.dateOfBirth}
+          minYear={1950}
+          maxYear={2024}
           onChange={(date) => handleDateChange("dateOfBirth", date, 1950, 2024)}
           isDateValid={isDateOfBirthValid}
-          className={`form-control ${ !isDateOfBirthValid ? "is-invalid" : "" }`}
-          resetState={resetState}
+          className={`form-control ${!isDateOfBirthValid ? "is-invalid" : ""}`}
+          resetState={resetDatePickerState}
           required
         />
         {dateOfBirthError && (
@@ -355,13 +331,14 @@ export default function Form() {
           name="start-date"
           id="start-date"
           fieldName="startDate"
-          value={formState.dateOfBirth}
+          dateFormat="dd/MM/yyyy"
+          value={formState.startDate}
           minYear={2000}
           maxYear={2024}
           onChange={(date) => handleDateChange("startDate", date, 2000, 2024)}
           isDateValid={isStartDateValid}
-          className={`form-control ${ !isStartDateValid ? "is-invalid" : "" }`}
-          resetState={resetState}
+          className={`form-control ${!isStartDateValid ? "is-invalid" : ""}`}
+          resetState={resetDatePickerState}
           required
         />
         {startDateError && (
@@ -493,9 +470,9 @@ export default function Form() {
           name="department"
           inputId="department-input"
           value={formState.department}
-          onChange={(selectedValue) =>
-            handleChange("department", selectedValue.value)
-          }
+          onChange={(selectedValue) => {
+            handleChange("department", selectedValue.value);
+          }}
           className={`form-control ${
             formState.department === "" && !isDepartmentSelected
               ? "is-invalid"
@@ -506,7 +483,7 @@ export default function Form() {
         />
         {!isDepartmentSelected && (
           <div className="invalid-feedback col-md-1">
-            Please select a State.
+            Please select a Department.
           </div>
         )}
       </div>
@@ -522,7 +499,7 @@ export default function Form() {
 
       {/* Modal */}
       <div>
-        <ModalApp modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
+      <ModalApp modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
       </div>
     </form>
   );

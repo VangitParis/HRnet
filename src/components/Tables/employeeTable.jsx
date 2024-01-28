@@ -9,10 +9,8 @@ import {
   useGlobalFilter,
   useSortBy,
 } from "react-table";
-import {
-  tableColumns,
-  mockTableData,
-} from "../../utils/tableData";
+import { tableColumns } from "../../utils/tableData";
+import { mockTableData } from "../../mocks/data";
 import "../../styles/sass/components/_employeeTable.scss";
 import { Link } from "react-router-dom";
 
@@ -24,19 +22,14 @@ export default function EmployeeTable({ data }) {
 
     // On soustrait dateB de dateA pour obtenir l'ordre correct
     const comparison = dateA - dateB;
-    // console.log("Date A:", dateA);
-    // console.log("Date B:", dateB);
-    // console.log("Comparison:", comparison);
+  
     if (sortDesc) {
-      // console.log("Sort Descending");
       return comparison * -1; // Inverser l'ordre pour le tri descendant
     } else {
-      // console.log("Sort Ascending");
       return comparison;
     }
   };
 
-  // console.log("Data:", data);
   const {
     getTableProps,
     getTableBodyProps,
@@ -67,18 +60,12 @@ export default function EmployeeTable({ data }) {
   startDateColumn.sortType = (rowA, rowB) =>
     customDateSort(rowA, rowB, "startDate", startDateColumn.isSortedAsc);
 
-  // Ajouter des console log pour déboguer
-  // console.log("Header Groups:", headerGroups);
-
   // Modifier la configuration de la colonne "Date of Birth" après la création de la table
   const dateOfBirthColumn = headerGroups[0].headers.find(
     (column) => column.id === "dateOfBirth"
   );
   dateOfBirthColumn.sortType = (rowA, rowB) =>
     customDateSort(rowA, rowB, "dateOfBirth", dateOfBirthColumn.isSortedAsc);
-
-  // console log pour déboguer
-  // console.log("Header Groups:", headerGroups);
 
   return (
     <div className="employee-table table-responsive-sm">

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { mockTableData } from "../utils/tableData";
+import { mockTableData } from "../mocks/data";
 import { callApi } from "./apicall";
 import { getAbbreviationFromState } from "../modelisation/modelisation";
 
@@ -35,9 +35,6 @@ export const getMockEmployeeData = createAsyncThunk(
         // Retourner l'employé formaté
         return formattedEmployee;
       });
-    
-      // Utiliser mockData comme données formatées
-      console.log("Mock Data avec dates formatées et État abrégé:", mockData);
     
       // Vérifiez si mockData est défini avant de l'utiliser
       if (!mockData) {
