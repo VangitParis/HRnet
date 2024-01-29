@@ -1,7 +1,18 @@
-.btn-home{
- color: #000;
- border-color: red;
+@import '../utils/mixins';
+
+.title-error{
+  margin-top: 2rem;
+  line-height: 2.2rem;
+  text-align: center;
 }
-.main-error{
-    color: red;
-  }
+.text-error{
+  text-align: center;
+
+}
+
+
+.custom-btn-error{
+  background-color: $color-primary;
+  text-align: center;
+  color: white; 
+}

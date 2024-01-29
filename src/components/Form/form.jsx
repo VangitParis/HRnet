@@ -28,9 +28,9 @@ export default function Form() {
 
   const [dateOfBirthError, setDateOfBirthError] = useState(null);
   const [startDateError, setStartDateError] = useState(null);
+  const [generalError, setGeneralError] = useState(null);
 
   const [resetDatePickerState, setResetDatePicker] = useState(false);
-
 
   // initialState créé avec la méthode reduce pour créer un objet d'état initial
   // avec chaque champ initialisé à une chaîne vide
@@ -67,7 +67,6 @@ export default function Form() {
     }));
   };
   const updateDate = (newDate, fieldName, minYear, maxYear) => {
-  
     const isValidDate =
       newDate &&
       !isNaN(newDate.getTime()) &&
@@ -76,12 +75,16 @@ export default function Form() {
       newDate.getMonth() >= 0 &&
       newDate.getMonth() <= 11 &&
       newDate.getDate() >= 1 &&
-      newDate.getDate() <= new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0).getDate();
-  
-    setIsDateOfBirthValid(fieldName === "dateOfBirth" ? isValidDate : isDateOfBirthValid);
-    setIsStartDateValid(fieldName === "startDate" ? isValidDate : isStartDateValid);
+      newDate.getDate() <=
+        new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0).getDate();
+
+    setIsDateOfBirthValid(
+      fieldName === "dateOfBirth" ? isValidDate : isDateOfBirthValid
+    );
+    setIsStartDateValid(
+      fieldName === "startDate" ? isValidDate : isStartDateValid
+    );
     if (!isValidDate) {
-     
       const errorMessage =
         fieldName === "dateOfBirth"
           ? "Please provide a valid date of birth."
@@ -96,16 +99,14 @@ export default function Form() {
       setStartDateError(null);
     }
   };
-  
 
   const handleDateChange = (fieldName, date, minYear, maxYear) => {
     const formattedDate = formatDate(date);
     const isValidField = isDateInputValid(formattedDate);
-  
+
     handleChange(fieldName, formattedDate);
     const ageValid = isAgeValid(date);
     if (fieldName === "dateOfBirth") {
-      
       setIsDateOfBirthValid(isValidField && ageValid);
       setDateOfBirthError(
         isValidField && ageValid
@@ -116,36 +117,39 @@ export default function Form() {
         updateDate(date, "dateOfBirth", minYear, maxYear);
       }
     } else if (fieldName === "startDate") {
-  const minAge = 18; 
-      const minStartDate = parse(formState.dateOfBirth, "dd/MM/yyyy", new Date());
-      minStartDate.setFullYear(minStartDate.getFullYear() +18)
-  const currentDate = new Date();
-  const startDate = parse(formattedDate, "dd/MM/yyyy", new Date());
-  const startDateValid =
-    isDateInputValid(formattedDate) &&
-    isAfter(startDate, minStartDate) &&
-    isBefore(startDate, currentDate);
+      const minAge = 18;
+      const minStartDate = parse(
+        formState.dateOfBirth,
+        "dd/MM/yyyy",
+        new Date()
+      );
+      minStartDate.setFullYear(minStartDate.getFullYear() + 18);
+      const currentDate = new Date();
+      const startDate = parse(formattedDate, "dd/MM/yyyy", new Date());
+      const startDateValid =
+        isDateInputValid(formattedDate) &&
+        isAfter(startDate, minStartDate) &&
+        isBefore(startDate, currentDate);
 
-  setIsStartDateValid(isValidField && startDateValid);
-  setStartDateError(
-    isValidField && startDateValid
-      ? null
-      : `Start date must be valid, at least ${minAge} years after your date of birth, and not exceed the current date.`
-  );
-      if (fieldName === "starDate" && startDateValid) {
+      setIsStartDateValid(isValidField && startDateValid);
+      setStartDateError(
+        isValidField && startDateValid
+          ? null
+          : `Start date must be valid, at least ${minAge} years after your date of birth, and not exceed the current date.`
+      );
+      if (fieldName === "startDate" && startDateValid) {
         updateDate(startDate, "startDate", minYear, maxYear);
-       } 
-     
+      }
     }
   };
   const isAgeValid = (birthDate) => {
     if (!birthDate) {
       return false;
     }
-  
+
     const today = new Date();
     const age = today.getFullYear() - birthDate.getFullYear();
-  
+
     return age >= 18;
   };
 
@@ -154,16 +158,18 @@ export default function Form() {
     setResetDatePicker(true);
 
     setFormState(initialState);
-    formState.dateOfBirth = ""
-    formState.startDate =""
-   
+    formState.dateOfBirth = "";
+    formState.startDate = "";
+    setIsDateOfBirthValid(true);
+    setIsStartDateValid(true);
     setDateOfBirthError(null);
     setStartDateError(null);
-
   };
 
   const handleSaveEmployee = async (e) => {
     e.preventDefault();
+
+    setGeneralError(null);
 
     // Vérifier si la date de naissance est vide ou non valide
     if (!isDateOfBirthValid) {
@@ -199,6 +205,7 @@ export default function Form() {
           return fieldValue !== null && fieldValue !== undefined;
         case "zipCode":
           return fieldValue && isZipCodeValid(fieldValue);
+
         default:
           return (
             fieldValue.toString().trim() !== "" && isTextInputValid(fieldValue)
@@ -208,9 +215,12 @@ export default function Form() {
 
     // Si des champs ne sont pas valides, interrompre la soumission du formulaire
     if (!areFieldsValid) {
+      setGeneralError("Please fill in all required fields.");
       return;
     }
-
+    if (!formRef.current.reportValidity()) {
+      return;
+    }
     // Création de l'objet employeeData avec les valeurs des champs
     const newEmployeeData = {};
     fieldNames.forEach((fieldName) => {
@@ -222,10 +232,9 @@ export default function Form() {
 
     // Réinitialiser les champs
     handleResetForm();
-   
-     // Ouvrir la Modal
-    setModalIsOpen(true);
 
+    // Ouvrir la Modal
+    setModalIsOpen(true);
   };
 
   return (
@@ -235,9 +244,10 @@ export default function Form() {
       id="create-employee"
       onSubmit={handleSaveEmployee}
       data-testid="create-employee-form"
+      noValidate
     >
       {/* FirstName */}
-      <div className="col-md-6 p-1">
+      <div className="col-md-12 col-lg-6 p-1 ">
         <label htmlFor="first-name" className="form-label fw-bold">
           First Name
         </label>
@@ -255,7 +265,7 @@ export default function Form() {
           autoComplete="given-name"
           required
         />
-        {formState.firstName && !isTextInputValid(formState.firstName) && (
+        {formState.firstName && (
           <div
             className="invalid-feedback col-md-1"
             data-testid="error-message"
@@ -267,7 +277,7 @@ export default function Form() {
 
       {/* LastName */}
 
-      <div className="col-md-6 p-1">
+      <div className="col-md-12 col-lg-6  p-1">
         <label htmlFor="last-name" className="form-label fw-bold">
           Last Name
         </label>
@@ -293,13 +303,14 @@ export default function Form() {
       </div>
 
       {/* DatePicker Input dateOfBirth */}
-      <div className="col-md-6 p-1">
+      <div className="col-md-12 col-lg-6 p-1 component-date">
         <label htmlFor="date-of-birth" className="form-label fw-bold">
           Date of Birth
         </label>
 
         <InputDatePicker
           name="date-of-birth"
+          type="date"
           id="date-of-birth"
           fieldName="dateOfBirth"
           value={formState.dateOfBirth}
@@ -323,12 +334,13 @@ export default function Form() {
       </div>
 
       {/* DatePicker Input startDate*/}
-      <div className="col-md-6 p-1">
+      <div className="col-md-12 col-lg-6 p-1 component-date" >
         <label htmlFor="start-date" className="form-label fw-bold">
           Start Date
         </label>
         <InputDatePicker
           name="start-date"
+          type="date"
           id="start-date"
           fieldName="startDate"
           dateFormat="dd/MM/yyyy"
@@ -353,11 +365,11 @@ export default function Form() {
       </div>
 
       {/* Start Fieldset : Address */}
-      <fieldset className="row gx-0 align-items-center">
-        <legend className="p-1 mb-0">Address</legend>
+      <fieldset className=" gx-0 align-items-center">
+        <legend className="p-1 mb-0 col-md-6">Address</legend>
 
         {/* Street */}
-        <div className="col-md-6 col-lg-12 p-1">
+        <div className="col-md-12 col-lg-12 p-1">
           <label htmlFor="street" className="form-label fw-bold">
             Street
           </label>
@@ -383,7 +395,7 @@ export default function Form() {
 
         {/* City */}
         <div className="row gx-0 gy-1">
-          <div className="col-md-8 col-lg-4 p-1">
+          <div className="col-md-12 col-lg-4 p-1">
             <label className="form-label fw-bold" htmlFor="city">
               City
             </label>
@@ -408,7 +420,7 @@ export default function Form() {
           </div>
 
           {/* Dropdown State */}
-          <div className="col-md-8 col-lg-4 p-1">
+          <div className="col-md-12 col-lg-4 p-1">
             <label className="form-label fw-bold" htmlFor="state-input">
               State
             </label>
@@ -433,7 +445,7 @@ export default function Form() {
           </div>
 
           {/* Zip code */}
-          <div className="col-md-8 col-lg-4 p-1">
+          <div className="col-md-12 col-lg-4 p-1">
             <label className="form-label fw-bold" htmlFor="zip-code">
               Zip Code
             </label>
@@ -457,11 +469,10 @@ export default function Form() {
             )}
           </div>
         </div>
-      </fieldset>
-      {/* End Fieldset */}
+     
 
       {/* Dropdown department */}
-      <div className="col-auto col-md-12 col-lg-12 p-1 gx-0">
+      <div className="col-md-12 col-lg-12 p-1 gx-0">
         <label htmlFor="department-input" className="form-label fw-bold">
           Department
         </label>
@@ -486,20 +497,23 @@ export default function Form() {
             Please select a Department.
           </div>
         )}
-      </div>
-
+        </div>
+        </fieldset>
+      {/* End Fieldset */}
+     
       {/* Button Submit */}
-      <div className="col-12">
-        <div className="d-grid gap-2 mx-auto mb-5 mt-5 col-md-3">
+        <div className="d-grid gap-2 mt-4 mx-auto col-md-3" >
           <button type="submit" className="btn custom-btn fw-bold">
             Save
           </button>
-        </div>
+    
       </div>
-
+      {generalError && (
+          <div className="mx-auto col-md-12 text-center text-danger general-error">{generalError}</div>
+      )}
       {/* Modal */}
       <div>
-      <ModalApp modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
+        <ModalApp modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
       </div>
     </form>
   );

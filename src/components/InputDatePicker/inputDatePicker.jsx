@@ -1,7 +1,5 @@
-// InputDatePicker.jsx
-
 import React, { useRef, useState, useEffect } from "react";
-import DatePicker from "plugin-datepicker";
+import DatePicker from "plugin-datepicker"
 import "../../styles/sass/components/_form.scss";
 
 export default function InputDatePicker({

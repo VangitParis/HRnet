@@ -26,8 +26,8 @@ export default function Home() {
     backgroundImage: imageLoaded ? `url(${backgroundImage})` : 'none' ,
   };
   return (
-    <main className="container-fluid mt-0 d-flex gradient-background flex-column justify-content " style={gradientBackgroundStyle} data-testid="background-image">
-      <h1 className="text-center">Create Employee</h1>
+    <main className="mt-0 d-flex flex-column justify-content ">
+      <h1 className="text-center gradient-background"  style={gradientBackgroundStyle} data-testid="background-image">Create Employee</h1>
       <div className="d-flex align-items-center mt-5 flex-lg-row flex-column">
         <Form />
       </div>

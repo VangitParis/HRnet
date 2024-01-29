@@ -39,8 +39,8 @@ export default function EmployeeList() {
   ) : error ? (
     <main className="main">Error: {error}</main>
   ) : (
-    <main className="container-fluid gradient-background mt-0 d-flex flex-column justify-content" style={gradientBackgroundStyle}>
-      <h1 className="mt-1 text-center">Current Employees</h1>
+    <main className=" mt-0 d-flex flex-column justify-content">
+      <h1 className="mt-1 text-center gradient-background" style={gradientBackgroundStyle}>Current Employees</h1>
       <EmployeeTable data={newEmployeeList} />
     </main>
   );

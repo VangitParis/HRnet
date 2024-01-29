@@ -12,14 +12,19 @@
     box-sizing: border-box;
 }
 p{
-    margin-top: -1.35rem !important;
     margin-bottom: 0.25rem;
 }
 
 h1{
-    line-height: 9.2rem;
-    font-size: 28px;
+    line-height: 7.2rem;
+    font-size: 2rem;
+   
     @include respond-to($breakpoint-xxl){
-        font-size: 36px;
+
     }
+}
+main{
+    height: 700px;
+    background-color: $color-primary-complement;
+    position: relative;
 }

@@ -3,15 +3,38 @@
 
 
 form#create-employee{
-    margin-top: 0rem;
-    width: 75%;
-    @include respond-to($breakpoint-xl) {
-      width: 55%; 
-    }
-    @include respond-to($breakpoint-xxl){
-        width: 40%;
-    }
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    right: 10%;
+    bottom: 0;
+    width: 70%;
     z-index: 0;
+   @include respond-to($breakpoint-md){
+        left: 10%;
+        right: 10%;
+        width: 65%;
+   }
+    @include respond-to($breakpoint-xl) {
+        width: 60%;
+        left: 15%;
+        right: 15%;
+
+    }
+    @include respond-to($breakpoint-xxl) {
+        width: 60%;
+        left: 15%;
+        right: 15%;
+        ;
+    }
+    @include respond-to($breakpoint-xxxl) {
+        width: 50%;
+        left: 15%;
+        right: 15%;
+        top:30%;
+    }
+ 
+   
   }
 
   .inputStyle{
@@ -25,6 +48,7 @@ form#create-employee{
     text-align: center;
     color: white;
     font-size: 1rem;
+    height: 100%;
 }
 .custom-btn:hover{
     background-color: $color-secondary;
@@ -38,24 +62,11 @@ form#create-employee{
     font-size: 1rem;
     color: black;
     bottom: 0;
-    position: relative;
-    right: 0;
-    top: -31px;
-    left: 322px;
-
+    position:absolute;
+    top: 70%;
+    right: 30px;
+    transform: translateY(-90%);
     cursor: pointer;
-    @include max-width($breakpoint-sm) {
-        left: 250px;
-      }
-    @include max-width($breakpoint-md) {
-        left: 227px;
-      }
-    @include respond-to($breakpoint-xl) {
-        left: 337px;
-      }
-      @include respond-to($breakpoint-xxl) {
-        left: 454px;
-      }
 }
 
 .calendar-icon:focus{
@@ -65,7 +76,8 @@ form#create-employee{
 }
 
 .input-container{
-    display: inline;
+    display: block;
+    position: relative;
 }
 .input-date:focus-visible {
     outline:inherit;
@@ -126,10 +138,20 @@ form#create-employee{
 .invalid-feedback{
 color: #b10b1c;
 }
-
+.component-date{
+  height: 130px;
+}
 fieldset{
-    position: relative;
+    margin-top: -2% !important;
+    position:relative;
     z-index: 1;
+    @include max-width ($breakpoint-sm){
+        margin-top: 4% !important;
+    }
+    @include max-width($breakpoint-md){
+        margin-top: -1% !important;
+
+    }
 }
 .custom-month-select-style, .custom-year-select-style{
     font-size: 1rem;
@@ -154,24 +176,17 @@ fieldset{
 
 
 .custom-calendar-style{
-    width: 364px;
-    height: 200px;
+    width: 100%;
+    top: -40%;
+    height: 150px;
     z-index: 3;
-    position: absolute;
-    top: 390px;
+    position: relative;
     --border-radius: 5px;
     --accent-br: 5px;
-    @include respond-to($breakpoint-xl){
-        width: 380px;
-        top: 395px;
-    }
-    @include respond-to($breakpoint-xxl){
-        width: 497px;
-        top: 385px;
-    }
-    
-    // --side-padding: 10px 20px;
+  
 }
+
+
 .custom-date-style.selected::before{
     background-color: $color-primary;
 
@@ -203,5 +218,9 @@ fieldset{
     border-color: #86b7fe;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+
+.text-danger{
+    color: #b10b1c;
 }
 
