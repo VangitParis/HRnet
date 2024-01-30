@@ -7,7 +7,7 @@ import Home from "./pages/Home/home.jsx";
 
 
 
-// Suite de tests pour le lien vers la page /employee-list dans le composant Header
+// Tests suite for link to page /employee-list in Header component
 describe("Link to Employee List Page in Header Component", () => {
   test("renders the link", () => {
     render(
@@ -33,7 +33,7 @@ describe("Link to Employee List Page in Header Component", () => {
 
     fireEvent.click(employeeListLink);
 
-    // Attente pour permettre à la navigation de se produire
+    // Wait response navigation
     await waitFor(() => {
       console.log("Current URL:", window.location.pathname);
       expect(window.location.pathname).toBe("/employee-list");
@@ -53,8 +53,8 @@ describe("Home Component", () => {
     const title = screen.getByText(/Create Employee/i);
     expect(title).toBeInTheDocument();
   });
-  // Suite de tests pour le fond d'écran
-  // Test pour vérifier le rendu du fond d'écran avec chargement
+  // Tests suite for background image
+  // Check the background render when loaded
   test("renders background image loaded", () => {
     render(
       <Provider store={store}>
@@ -68,9 +68,9 @@ describe("Home Component", () => {
   });
 });
 
-// Tests pour le formulaire
+// Tests form
 describe("Form in Home Component", () => {
-  // Test pour vérifier la présence du formulaire
+  // Test for check if the form is present
   test("renders the form", () => {
     render(
       <Provider store={store}>
@@ -83,7 +83,7 @@ describe("Form in Home Component", () => {
     expect(formElement).toBeInTheDocument();
   });
 
-  // Test pour vérifier la présence de champs spécifiques dans le formulaire
+  // Test for check fields are present in form
   test("renders specific form fields", () => {
     render(
       <Provider store={store}>

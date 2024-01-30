@@ -58,18 +58,30 @@ a:hover{
         margin-right: 15px;
         font-size: inherit;
     }
+    @include respond-to($breakpoint-xxl) {
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size: inherit;
+    }
 }
 .pagination{
     justify-content: space-between;
     width: 10%;
     align-items: center;
-    @include max-width($breakpoint-md){
+    @include respond-to($breakpoint-md){
         width: 15%;
+    }
+    @include respond-to($breakpoint-lg){
+        width: 9%;
     }
     @include respond-to($breakpoint-xl) {
         width: 10%;
     }
     @include respond-to($breakpoint-xxl) {
+        width: 8%;
+    }
+
+    @include respond-to($breakpoint-xxxl) {
         width: 5%;
     }
 
@@ -94,7 +106,10 @@ a:hover{
         margin-right: 15px;
     }
     @include respond-to($breakpoint-xl) {
+        margin-left: 10px;
+        margin-right: 10px;
         font-size: inherit;
     }
+
    
 }
