@@ -50,7 +50,7 @@ export default function EmployeeList() {
   ) : error ? (
     <main className="main">Error: {error}</main>
   ) : (
-    <main className=" mt-0 d-flex flex-column justify-content">
+    <main className="main-employee-list mt-0 d-flex flex-column justify-content">
       <h1
         className="mt-1 text-center gradient-background"
         style={gradientBackgroundStyle}

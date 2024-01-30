@@ -31,6 +31,9 @@
     @include respond-to($breakpoint-xl){
         width: 27%;
     }
+    @include respond-to($breakpoint-xxl){
+        width: 20%;
+    }
     @include respond-to($breakpoint-xxxl){
         width: 16%;
     }
