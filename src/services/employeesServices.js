@@ -66,7 +66,6 @@ export const getMockEmployeeData = createAsyncThunk(
     try {
       // Make an API call to retrieve employee data
       const response = await callApi(url);
-
       // Check if the response status is 200 and return the data or an empty array
       return response.status === 200 ? response.data : [];
     } catch (error) {

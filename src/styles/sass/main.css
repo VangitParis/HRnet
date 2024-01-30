@@ -4,6 +4,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: inherit;
 }
 
 code {
@@ -23,98 +24,80 @@ code {
   border-bottom: 3px solid #596F07;
 }
 
-.btn-home {
-  color: #000;
-  border-color: red;
-}
-
-.main-error {
-  color: red;
-}
-
 /* Mixin pour les media queries */
-form#create-employee {
-  width: 100%;
-}
-@media screen and (min-width: 768px) {
-  form#create-employee {
-    width: 50%;
-  }
+.title-error {
+  margin-top: 2rem;
+  line-height: 2.2rem;
+  text-align: center;
 }
 
-.form-control {
-  border-radius: 5px;
-  border: 1px solid #596F07;
+.text-error {
+  text-align: center;
 }
 
-.inputStyle {
-  border-radius: 5px;
-  border: 1px solid #596F07;
-}
-
-.custom-btn {
-  background-color: #93ad18;
+.custom-btn-error {
+  background-color: #596F07;
   text-align: center;
   color: white;
 }
 
-.custom-btn:hover {
-  background-color: #C4D680;
-}
-
-.custom-bg {
-  background-color: #596F07;
-  border-radius: 5px;
-}
-
+/* Mixin pour les media queries */
 .cover {
   transform: translateY(-71px);
   text-align: center;
 }
 
 .gradient-background {
-  background: url(../../../assets/wave-bottom.svg);
+  background-repeat: no-repeat;
+  height: 550px;
   background-size: cover;
-  background-position: center;
-  background-color: rgba(222, 213, 189, 0.231372549);
 }
 
 .display-block {
   display: block !important;
 }
 
-.close-modal-btn {
-  position: relative;
-  right: 0;
-  top: -15px;
-  left: 95%;
-  bottom: 15px;
-  width: 24px;
-  height: 24px;
-  align-items: center;
-  justify-content: center;
-}
-
 /* Mixin pour les media queries */
 .gradient-background_employeeList {
-  background: url(../../../assets/wave.svg);
   background-repeat: no-repeat;
   background-color: rgba(222, 213, 189, 0.231372549);
 }
 
 /* Mixin pour les media queries */
 .employee-table {
-  margin-top: 100px;
+  margin-top: 1rem;
 }
 
 .custom-table {
-  width: 80%;
+  table-layout: fixed;
   border: 3px solid #596F07;
-  border-radius: 5px;
+  width: 98%;
+}
+.custom-table > thead {
+  vertical-align: middle;
+}
+@media screen and (min-width: 1441px) {
+  .custom-table {
+    width: 99%;
+  }
 }
 
 .custom-header {
-  font-size: 1.1rem;
+  font-size: 13.5px;
+}
+@media screen and (min-width: 1200px) {
+  .custom-header {
+    font-size: 16px;
+  }
+}
+
+.custom-cells {
+  font-size: 13px;
+}
+@media screen and (min-width: 1200px) {
+  .custom-cells {
+    font-size: 15px;
+  }
 }
 
 a {
@@ -129,33 +112,107 @@ a:hover {
 .search {
   align-items: center;
   justify-content: space-between;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 13px;
 }
 .search > label > input {
   border-color: #596F07;
   border-radius: 5px;
 }
+@media screen and (min-width: 1200px) {
+  .search {
+    margin-left: 15px;
+    margin-right: 15px;
+    font-size: inherit;
+  }
+}
+@media screen and (min-width: 1441px) {
+  .search {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: inherit;
+  }
+}
 
 .pagination {
   justify-content: space-between;
-  width: 17%;
+  width: 10%;
   align-items: center;
+}
+@media screen and (min-width: 768px) {
+  .pagination {
+    width: 15%;
+  }
+}
+@media screen and (min-width: 992px) {
+  .pagination {
+    width: 9%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .pagination {
+    width: 10%;
+  }
+}
+@media screen and (min-width: 1441px) {
+  .pagination {
+    width: 8%;
+  }
+}
+@media screen and (min-width: 2560px) {
+  .pagination {
+    width: 5%;
+  }
 }
 
 .current {
   border: 1px solid;
   color: black;
   padding: 0.5% 3%;
+  font-size: 13px;
 }
 
 .custom-info {
   align-items: center;
   justify-content: space-between;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+@media screen and (min-width: 992px) {
+  .custom-info {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .custom-info {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: inherit;
+  }
 }
 
 *, *::before, *::after {
   box-sizing: border-box;
+}
+
+p {
+  margin-bottom: 0.25rem;
+}
+
+h1 {
+  line-height: 7.2rem;
+  font-size: 2rem;
+}
+main {
+  max-height: 700px;
+  background-color: rgba(222, 213, 189, 0.231372549);
+  position: relative;
+}
+
+.main-employee-list {
+  height: 100px;
 }/*# sourceMappingURL=main.css.map */
