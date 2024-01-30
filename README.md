@@ -5,8 +5,21 @@ HRnet is an internal employee management application developed by WealthHealth. 
 ## Getting Started
 
 ### Installation
+### Prerequisites
 
-To get started, follow these steps:
+Node.js v18 or higher
+Please make sure you have the right versions and download both packages. You can verify this by using the following commands in your terminal:
+
+### Check Node.js version
+```bash
+node --version
+```
+### Check npm version
+```bash
+npm --version
+```
+
+### To get started, follow these steps:
 
 1. Clone the repository:
     ```bash

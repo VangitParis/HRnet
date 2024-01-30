@@ -146,7 +146,7 @@ export default function Form() {
       setDateOfBirthError(
         isValidField && ageValid
           ? null
-          : "The date of birth must be a valid date, and you must be at least 18 years old."
+          : "The date of birth must be a valid date, and employee must be at least 18 years old."
       );
       // Update date for age calculation if age is valid
       if (ageValid) {
@@ -171,7 +171,7 @@ export default function Form() {
       setStartDateError(
         isValidField && startDateValid
           ? null
-          : `Start date must be valid, at least ${minAge} years after your date of birth, and not exceed the current date.`
+          : `Start date must be valid, at least ${minAge} years after employee date of birth, and not exceed the current date.`
       );
       // Update start date if it is valid
       if (fieldName === "startDate" && startDateValid) {
