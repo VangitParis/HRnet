@@ -1,35 +1,33 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
-import { validateAndFormatDate } from "../../modelisation/modelisation";
-
+// Import from react-table
 import {
   useTable,
   usePagination,
   useGlobalFilter,
   useSortBy,
 } from "react-table";
+// Imports from files utils, modelisation and mocks
 import { tableColumns } from "../../utils/tableData";
 import { mockTableData } from "../../mocks/data";
+import { customDateSort } from "../../modelisation/modelisation";
+// Import styles
 import "../../styles/sass/components/_employeeTable.scss";
-import { Link } from "react-router-dom";
 
-
+/**
+ * EmployeeTable component for displaying and managing employee data in a table format.
+ *
+ * @component
+ *
+ * @param {Object} props - The properties of the EmployeeTable component.
+ * @param {Array} props.data - The data to be displayed in the table.
+ *
+ * @returns {JSX.Element} - The EmployeeTable component.
+ */
 export default function EmployeeTable({ data }) {
-  const customDateSort = (rowA, rowB, columnId, sortDesc) => {
-    const dateA = validateAndFormatDate(rowA.values[columnId], "dd/MM/yyyy", new Date());
-    const dateB = validateAndFormatDate(rowB.values[columnId], "dd/MM/yyyy", new Date());
-
-    // On soustrait dateB de dateA pour obtenir l'ordre correct
-    const comparison = dateA - dateB;
-  
-    if (sortDesc) {
-      return comparison * -1; // Inverser l'ordre pour le tri descendant
-    } else {
-      return comparison;
-    }
-  };
-
+  // React-table hooks and configurations
   const {
     getTableProps,
     getTableBodyProps,
@@ -44,7 +42,7 @@ export default function EmployeeTable({ data }) {
     nextPage,
   } = useTable(
     {
-      columns: tableColumns,
+      columns: tableColumns, // Defined elsewhere in the code
       data,
       customSortType: { customDateSort },
       initialState: { pageSize: 10 }, //initial pageSize=10
@@ -53,20 +51,21 @@ export default function EmployeeTable({ data }) {
     useSortBy,
     usePagination
   );
-  // Modifier la configuration de tri pour la colonne "Start Date"
+  // Configure sorting for "Start Date" column
   const startDateColumn = headerGroups[0].headers.find(
     (column) => column.id === "startDate"
   );
   startDateColumn.sortType = (rowA, rowB) =>
     customDateSort(rowA, rowB, "startDate", startDateColumn.isSortedAsc);
 
-  // Modifier la configuration de la colonne "Date of Birth" après la création de la table
+  // Configure sorting for "Date of Birth" column
   const dateOfBirthColumn = headerGroups[0].headers.find(
     (column) => column.id === "dateOfBirth"
   );
   dateOfBirthColumn.sortType = (rowA, rowB) =>
     customDateSort(rowA, rowB, "dateOfBirth", dateOfBirthColumn.isSortedAsc);
 
+  // JSX structure for rendering the table
   return (
     <div className="employee-table table-responsive-sm">
       <div className="d-flex search">
@@ -97,6 +96,7 @@ export default function EmployeeTable({ data }) {
           />
         </label>
       </div>
+      {/* Table */}
       <table
         {...getTableProps()}
         className="table mx-auto mt-1 table-hover custom-table"
@@ -138,13 +138,13 @@ export default function EmployeeTable({ data }) {
           })}
         </tbody>
       </table>
-
+      {/* Pagination and Info */}
       <div
         className="d-flex justify-content-between custom-info"
         role="status"
         aria-live="polite"
       >
-        {/* Afficher le nombre d'éléments affichés dans la page actuelle par rapport au nombre total d'éléments dans le tableau */}
+        {/* Display the number of items shown on the current page compared to the total number of items in the table */}
         {`Showing ${
           page.length > 0 ? pageIndex * pageSize + 1 : 0
         } to ${Math.min((pageIndex + 1) * pageSize, page.length)} of ${

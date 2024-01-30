@@ -1,7 +1,28 @@
 import React, { useRef, useState, useEffect } from "react";
-import DatePicker from "plugin-datepicker"
+import DatePicker from "plugin-datepicker";
 import "../../styles/sass/components/_form.scss";
 
+/**
+ * InputDatePicker component for selecting dates with validation and error handling.
+ *
+ * @component
+ * @example usage of InputDatePicker component
+ * <InputDatePicker
+ *   id="date-of-birth"
+ *   value={selectedDate}
+ *   onChange={(newDate) => handleDateChange("dateOfBirth", newDate)}
+ *   className="custom-datepicker"
+ *   fieldName="dateOfBirth"
+ *   resetState={resetDatePickerState}
+ *   required={true}
+ *   minYear={1950}
+ *   maxYear={new Date().getFullYear()}
+ * />
+ *
+ * @param {{id: string, value: string, onChange: Function, className: string, fieldName: string, resetState: boolean, required: boolean, minYear: number, maxYear: number}} props - The properties object.
+ *
+ * @returns {JSX.Element} - The InputDatePicker component.
+ */
 export default function InputDatePicker({
   id,
   value,
@@ -11,45 +32,37 @@ export default function InputDatePicker({
   resetState,
   required,
   minYear,
-  maxYear
+  maxYear,
 }) {
   const inputRef = useRef(null);
   const [isErrorVisible, setIsErrorVisible] = useState(false);
-  // const [minYear, setMinYear] = useState(1950);
-  // const [maxYear, setMaxYear] = useState(new Date().getFullYear());
   const [localValue, setLocalValue] = useState("");
   const [customKey, setCustomKey] = useState(Date.now());
   const [wasResetBefore, setWasResetBefore] = useState(false);
   useEffect(() => {
-    // Set minYear and maxYear based on the field
-    // if (fieldName === "startDate") {
-    //   setMinYear(2000);
-     
-    // }
-    // if (fieldName === "dateOfBirth") {
-    //   setMinYear(1950);
-    
-    // }
-    
-// If resetState transitions from false to true, clear the localValue
-if (resetState && !wasResetBefore) {
-  setCustomKey((prevKey) => prevKey + 1);
-  setLocalValue("");
-  setWasResetBefore(true); // Set a flag to indicate that reset has occurred
-} else if (resetState && !wasResetBefore) {
-  // Reset the flag when resetState goes back to false
-  setWasResetBefore(false);
-  setCustomKey((prevKey) => prevKey + 1);
-  setLocalValue("")
-}
+    // If resetState transitions from false to true, clear the localValue
+    if (resetState && !wasResetBefore) {
+      setCustomKey((prevKey) => prevKey + 1);
+      setLocalValue("");
+      setWasResetBefore(true); // Set a flag to indicate that reset has occurred
+    } else if (resetState && !wasResetBefore) {
+      // Reset the flag when resetState goes back to false
+      setWasResetBefore(false);
+      setCustomKey((prevKey) => prevKey + 1);
+      setLocalValue("");
+    }
 
-  
-  // Update isErrorVisible based on the validation logic
-  setIsErrorVisible(!required && !value);
-
-   
-    
-  }, [required, value, fieldName, onChange, resetState, localValue, wasResetBefore]);
+    // Update isErrorVisible based on the validation logic
+    setIsErrorVisible(!required && !value);
+  }, [
+    required,
+    value,
+    fieldName,
+    onChange,
+    resetState,
+    localValue,
+    wasResetBefore,
+  ]);
 
   const customStyles = {
     className: `form-control custom-input-class ${className || ""} ${
@@ -82,7 +95,7 @@ if (resetState && !wasResetBefore) {
         customInputClass={customStyles}
         errorClass={customErrorClass}
         errorMessage={customMessage}
-        value={resetState ? "" : value} 
+        value={resetState ? "" : value}
         onChange={onChange}
         required={required}
       />

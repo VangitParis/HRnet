@@ -1,14 +1,12 @@
 /**
- * Effectue un appel API avec les paramètres fournis.
+ * Performs an API call with the provided parameters.
  *
- * @param {string} url - L'URL de l'API.
- * @param {string} method - La méthode HTTP (GET, POST, PUT, etc.).
- * @param {Object} [data=null] - Les données à envoyer avec la requête (null si aucune donnée n'est requise).
- * @returns {Promise<Object>} - Une promesse avec les données de la réponse JSON de l'API.
- * @throws {Error} - Une erreur si la requête échoue.
+ * @param {string} url - The URL of the API.
+ * @param {string} method - The HTTP method (GET, POST, PUT, etc.).
+ * @param {Object} [data=null] - The data to be sent with the request (null if no data is required).
+ * @returns {Promise<Object>} - A promise with the JSON response data from the API.
+ * @throws {Error} - An error if the request fails.
  */
-
-
 export async function callApi(url, data, method) {
   const headers = {
     "Content-Type": "application/json",
@@ -23,10 +21,10 @@ export async function callApi(url, data, method) {
     try {
       const response = await fetch(url, requestOptions);
       if (!response.ok) {
-        throw new Error("Erreur lors de la promesse");
+        throw new Error("Error during the promise");
        }
-      const data = await response.json();
-      return data;
+       const responseData = await response.json();
+       return responseData;
     } catch (error) {
       throw new Error(error.message);
     }

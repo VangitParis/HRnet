@@ -1,3 +1,4 @@
+@import '../utils/mixins';
 .close-modal-btn{
     position: relative;
     right: 0;
@@ -8,4 +9,42 @@
     height: 24px;
     align-items: center;
     justify-content: center;
+    @include max-width ($breakpoint-sm){
+        left: 205px;
+    }
+    @include respond-to ($breakpoint-md){
+        left: 290px;
+    }
+    @include respond-to($breakpoint-xxxl){
+        left: 315px;
+    }
+}
+
+.modal-content{
+    width: 70%;
+    @include respond-to($breakpoint-md){
+        width: 50%;
+    }
+    @include respond-to($breakpoint-lg){
+        width: 38%;
+    }
+    @include respond-to($breakpoint-xl){
+        width: 27%;
+    }
+    @include respond-to($breakpoint-xxxl){
+        width: 16%;
+    }
+}
+
+.title-modal{
+    font-size: 20px;
+    height: 20px;
+  
+    @include respond-to($breakpoint-md){
+        height: 35px;
+        line-height: 0;
+       
+      
+    }
+   
 }

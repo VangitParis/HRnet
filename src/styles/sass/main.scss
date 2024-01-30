@@ -24,7 +24,7 @@ h1{
     }
 }
 main{
-    height: 700px;
+    max-height: 700px;
     background-color: $color-primary-complement;
     position: relative;
 }

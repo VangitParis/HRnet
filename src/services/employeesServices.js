@@ -3,55 +3,79 @@ import { mockTableData } from "../mocks/data";
 import { callApi } from "./apicall";
 import { getAbbreviationFromState } from "../modelisation/modelisation";
 
-// Déterminer si l'application est en mode développement
+// Determine if the application is in development mode
 const isDevelopment = process.env.NODE_ENV === "development";
 
-// Base URL pour le mode de développement
+// Base URL for development mode
 const developmentBaseUrl = "http://localhost:3000/HRnet/";
 
-// Base URL pour le mode de production (Netlify)
+// Base URL for production mode
 const productionBaseUrl = "/";
 
-// Activation du mock ==>  true === 1 === actif, false === 0 === inactif
-let shouldUseMockData = Boolean(Number(process.env.REACT_APP_SHOULD_USE_MOCK_DATA));
+// Activate the mock: true (1) for active, false (0) for inactive
+let shouldUseMockData = Boolean(
+  Number(process.env.REACT_APP_SHOULD_USE_MOCK_DATA)
+);
 
-// Création du thunk
+/**
+ * Redux thunk for fetching employee data. Handles both mock data and actual API calls.
+ *
+ * @function
+ * @async
+ * @name getMockEmployeeData
+ * @memberof module:redux/thunks
+ * @param {Object} _ - Unused parameter (convention for actions that don't require input).
+ * @param {Object} options - Options provided by Redux Toolkit, including `rejectWithValue`.
+ * @param {Function} options.rejectWithValue - Function to reject the promise with a specific value.
+ * @returns {Promise<Array<Object>>} - A promise that resolves to an array of formatted employee data.
+ * @throws {string} - Rejected promise with an error message if the request fails.
+ *
+ * @example
+ * // Dispatch the thunk to fetch employee data
+ * dispatch(getMockEmployeeData());
+ */
 export const getMockEmployeeData = createAsyncThunk(
   "employees/getEmployeesMockList",
   async (_, { rejectWithValue }) => {
+    // Determine base URL based on development or production environment
     const baseUrl = isDevelopment ? developmentBaseUrl : productionBaseUrl;
     const url = baseUrl;
 
-
     if (shouldUseMockData) {
-      // Utiliser updatedDates pour créer mockData avec les dates formatées
+      // Use updatedDates to create mockData with formatted dates
       const mockData = mockTableData.employees.map((employee) => {
-        // Copier les propriétés de l'employé
+        // Copy employee properties
         const formattedEmployee = { ...employee };
-    
-        // Formater l'État
+
+        // Format the state
         formattedEmployee.state = getAbbreviationFromState(employee.state);
-    
-        // Retourner l'employé formaté
+
+        // Return the formatted employee
         return formattedEmployee;
       });
-    
-      // Vérifiez si mockData est défini avant de l'utiliser
+
+      // Check if mockData is defined before using it
       if (!mockData) {
         throw new Error("Données non reconnues");
       }
-    
-      // Utiliser mockData comme données formatées 
+
+      // Use mockData as formatted data
       return mockData;
     }
-    
+
     try {
+      // Make an API call to retrieve employee data
       const response = await callApi(url);
+
+      // Check if the response status is 200 and return the data or an empty array
       return response.status === 200 ? response.data : [];
     } catch (error) {
+      // Handle errors during the API call
       if (error.response && error.response.data.message) {
+        // Reject the promise with a specific value for invalid fields
         return rejectWithValue("Invalid Fields");
       } else {
+        // Reject the promise with a generic error message for internal server errors
         return rejectWithValue("Internal Server Error");
       }
     }

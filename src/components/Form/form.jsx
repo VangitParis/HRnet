@@ -3,23 +3,31 @@ import { useDispatch } from "react-redux";
 import { saveEmployee } from "../../features/employeesSlice";
 import { parse, isAfter, isBefore } from "date-fns";
 
+// Import functions from modelisation
 import {
   formatDate,
   isTextInputValid,
   isAddressInputValid,
   isZipCodeValid,
   isDateInputValid,
+  isAgeValid,
 } from "../../modelisation/modelisation";
+// Imports components
 import ModalApp from "../../components/Modal/modal";
 import DropdownList from "../DropdownList/dropdownList";
-
 import InputDatePicker from "../InputDatePicker/inputDatePicker";
 import "../../styles/sass/components/_form.scss";
 
+/**
+ * Form component for creating and saving employee information.
+ *
+ * @returns {JSX.Element} - The rendered Form component.
+ */
 export default function Form() {
   const dispatch = useDispatch();
   const formRef = useRef(null);
 
+  // State variables for managing form and validation
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isDateOfBirthValid, setIsDateOfBirthValid] = useState(true);
   const [isStartDateValid, setIsStartDateValid] = useState(true);
@@ -32,8 +40,7 @@ export default function Form() {
 
   const [resetDatePickerState, setResetDatePicker] = useState(false);
 
-  // initialState créé avec la méthode reduce pour créer un objet d'état initial
-  // avec chaque champ initialisé à une chaîne vide
+  // Initial state for form fields
   const initialState = {
     firstName: "",
     lastName: "",
@@ -45,7 +52,7 @@ export default function Form() {
     zipCode: "",
     department: "",
   };
-
+  // Field names and form state initialization
   const fieldNames = [
     "firstName",
     "lastName",
@@ -60,13 +67,28 @@ export default function Form() {
   const [formState, setFormState] = useState(initialState);
   const formClasses = ["row", "g-1", "mb-md-0", "mb-3", "mx-auto"];
 
+  /**
+   * Handle change event for form fields.
+   *
+   * @param {string} fieldName - The name of the form field.
+   * @param {string} value - The new value of the form field.
+   */
   const handleChange = (fieldName, value) => {
     setFormState((prevState) => ({
       ...prevState,
       [fieldName]: value,
     }));
   };
+  /**
+   * Update date and perform validation for date fields.
+   *
+   * @param {Date} newDate - The new date value.
+   * @param {string} fieldName - The name of the date field.
+   * @param {number} minYear - The minimum allowed year.
+   * @param {number} maxYear - The maximum allowed year.
+   */
   const updateDate = (newDate, fieldName, minYear, maxYear) => {
+    // Validation for date fields
     const isValidDate =
       newDate &&
       !isNaN(newDate.getTime()) &&
@@ -78,12 +100,14 @@ export default function Form() {
       newDate.getDate() <=
         new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0).getDate();
 
+    // Update state variables based on the date field
     setIsDateOfBirthValid(
       fieldName === "dateOfBirth" ? isValidDate : isDateOfBirthValid
     );
     setIsStartDateValid(
       fieldName === "startDate" ? isValidDate : isStartDateValid
     );
+    // Handle error messages if the date is not valid
     if (!isValidDate) {
       const errorMessage =
         fieldName === "dateOfBirth"
@@ -99,13 +123,24 @@ export default function Form() {
       setStartDateError(null);
     }
   };
-
+  /**
+   * Handle date change event for date fields.
+   *
+   * @param {string} fieldName - The name of the date field.
+   * @param {Date} date - The new date value.
+   * @param {number} minYear - The minimum allowed year.
+   * @param {number} maxYear - The maximum allowed year.
+   */
   const handleDateChange = (fieldName, date, minYear, maxYear) => {
     const formattedDate = formatDate(date);
     const isValidField = isDateInputValid(formattedDate);
 
+    // Update form state with the formatted date
     handleChange(fieldName, formattedDate);
+
+    // Perform additional validation for date fields
     const ageValid = isAgeValid(date);
+
     if (fieldName === "dateOfBirth") {
       setIsDateOfBirthValid(isValidField && ageValid);
       setDateOfBirthError(
@@ -113,6 +148,7 @@ export default function Form() {
           ? null
           : "The date of birth must be a valid date, and you must be at least 18 years old."
       );
+      // Update date for age calculation if age is valid
       if (ageValid) {
         updateDate(date, "dateOfBirth", minYear, maxYear);
       }
@@ -137,26 +173,21 @@ export default function Form() {
           ? null
           : `Start date must be valid, at least ${minAge} years after your date of birth, and not exceed the current date.`
       );
+      // Update start date if it is valid
       if (fieldName === "startDate" && startDateValid) {
         updateDate(startDate, "startDate", minYear, maxYear);
       }
     }
   };
-  const isAgeValid = (birthDate) => {
-    if (!birthDate) {
-      return false;
-    }
 
-    const today = new Date();
-    const age = today.getFullYear() - birthDate.getFullYear();
-
-    return age >= 18;
-  };
-
+  /**
+   * Handle form reset event.
+   */
   const handleResetForm = () => {
-    // Réinitialiser la prop resetState pour déclencher la réinitialisation de DatePicker
+    // Reset DatePicker state to trigger reset
     setResetDatePicker(true);
 
+    // Reset form state and related variables
     setFormState(initialState);
     formState.dateOfBirth = "";
     formState.startDate = "";
@@ -166,27 +197,34 @@ export default function Form() {
     setStartDateError(null);
   };
 
+  /**
+   * Handle employee save event.
+   *
+   * @param {Event} e - The form submit event.
+   */
   const handleSaveEmployee = async (e) => {
     e.preventDefault();
 
+    // Reset general error
     setGeneralError(null);
 
-    // Vérifier si la date de naissance est vide ou non valide
+    // Check if date of birth is empty or not valid
     if (!isDateOfBirthValid) {
       return;
     }
 
-    // Vérifier si la date de début est vide ou non valide
+    // Check if start date is empty or not valid
     if (!isStartDateValid) {
       return;
     }
-    // Vérifier la validité des champs
+    // Check validity of fields state and departments
     if (!isStateSelected || !isDepartmentSelected) {
       setIsStateSelected(true);
       setIsDepartmentSelected(true);
       return;
     }
 
+    // Check if all fields are valid
     const areFieldsValid = fieldNames.every((fieldName) => {
       const fieldValue = formState[fieldName];
 
@@ -213,30 +251,33 @@ export default function Form() {
       }
     });
 
-    // Si des champs ne sont pas valides, interrompre la soumission du formulaire
+    // If some fields are not valid, interrupt form submission
     if (!areFieldsValid) {
       setGeneralError("Please fill in all required fields.");
       return;
     }
+    // Check form validity using HTML5 validation
     if (!formRef.current.reportValidity()) {
       return;
     }
-    // Création de l'objet employeeData avec les valeurs des champs
+
+    // Create employee data object with field values
     const newEmployeeData = {};
     fieldNames.forEach((fieldName) => {
       newEmployeeData[fieldName] = formState[fieldName];
     });
 
-    // Appel de l'action createEmployeeData avec les données du nouvel employé
+    // Dispatch action to save employee data
     dispatch(saveEmployee(newEmployeeData));
 
-    // Réinitialiser les champs
+    // Reset form fields
     handleResetForm();
 
-    // Ouvrir la Modal
+    // Open the modal
     setModalIsOpen(true);
   };
 
+  // JSX rendering of the form
   return (
     <form
       ref={formRef}
@@ -334,7 +375,7 @@ export default function Form() {
       </div>
 
       {/* DatePicker Input startDate*/}
-      <div className="col-md-12 col-lg-6 p-1 component-date" >
+      <div className="col-md-12 col-lg-6 p-1 component-date">
         <label htmlFor="start-date" className="form-label fw-bold">
           Start Date
         </label>
@@ -469,48 +510,51 @@ export default function Form() {
             )}
           </div>
         </div>
-     
 
-      {/* Dropdown department */}
-      <div className="col-md-12 col-lg-12 p-1 gx-0">
-        <label htmlFor="department-input" className="form-label fw-bold">
-          Department
-        </label>
-        <DropdownList
-          id="department"
-          name="department"
-          inputId="department-input"
-          value={formState.department}
-          onChange={(selectedValue) => {
-            handleChange("department", selectedValue.value);
-          }}
-          className={`form-control ${
-            formState.department === "" && !isDepartmentSelected
-              ? "is-invalid"
-              : ""
-          }`}
-          required
-          autoComplete="off"
-        />
-        {!isDepartmentSelected && (
-          <div className="invalid-feedback col-md-1">
-            Please select a Department.
-          </div>
-        )}
+        {/* Dropdown department */}
+        <div className="col-md-12 col-lg-12 p-1 gx-0">
+          <label htmlFor="department-input" className="form-label fw-bold">
+            Department
+          </label>
+          <DropdownList
+            id="department"
+            name="department"
+            inputId="department-input"
+            value={formState.department}
+            onChange={(selectedValue) => {
+              handleChange("department", selectedValue.value);
+            }}
+            className={`form-control ${
+              formState.department === "" && !isDepartmentSelected
+                ? "is-invalid"
+                : ""
+            }`}
+            required
+            autoComplete="off"
+          />
+          {!isDepartmentSelected && (
+            <div className="invalid-feedback col-md-1">
+              Please select a Department.
+            </div>
+          )}
         </div>
-        </fieldset>
+      </fieldset>
       {/* End Fieldset */}
-     
+
       {/* Button Submit */}
-        <div className="d-grid gap-2 mt-4 mx-auto col-md-3" >
-          <button type="submit" className="btn custom-btn fw-bold">
-            Save
-          </button>
-    
+      <div className="d-grid gap-2 mt-4 mx-auto col-md-3">
+        <button type="submit" className="btn custom-btn fw-bold">
+          Save
+        </button>
       </div>
+
+      {/* General Error */}
       {generalError && (
-          <div className="mx-auto col-md-12 text-center text-danger general-error">{generalError}</div>
+        <div className="mx-auto col-md-12 text-center text-danger general-error">
+          {generalError}
+        </div>
       )}
+
       {/* Modal */}
       <div>
         <ModalApp modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />

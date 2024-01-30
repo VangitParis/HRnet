@@ -3,12 +3,29 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../../styles/sass/layouts/_header.scss";
 
+/**
+ * Header component for the navigation bar.
+ *
+ * @component
+ *
+ * @returns {JSX.Element} - The Header component.
+ */
 export default function Header() {
+   /**
+   * React Hook for accessing the current location object.
+   *
+   * @type {Object}
+   */
   const location = useLocation();
 
-  // Si l'emplacement actuel est "/employee-list"
+   /**
+   * Checks if the current page is the Employee List page.
+   *
+   * @type {boolean}
+   */
   const isEmployeeListPage = location.pathname === "/employee-list";
 
+ // JSX rendering of the Header
   return (
     <header className="custom-border border-3">
       <nav className="navbar navbar-expand-lg navbar-custom navbar-light">

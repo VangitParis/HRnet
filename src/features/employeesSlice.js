@@ -6,14 +6,22 @@ const initialState = {
   error: null,
   list: [],
 };
-
+/**
+ * Redux slice for managing employee data.
+ *
+ * @type {import("@reduxjs/toolkit").Slice}
+ */
 const employeesSlice = createSlice({
   name: "employees",
   initialState,
   reducers: {
-    //on ajoute l'employé créé à la liste
+    /**
+     * Adds the created employee to the employee list.
+     *
+     * @param {object} currentState - The current state of the employees slice.
+     * @param {object} action - The action containing the payload with employee data.
+     */
     saveEmployee: (currentState, action) => {
-      // Utilisation des données dans l'action.payload
       currentState.list = [...currentState.list, action.payload];
     },
   },
@@ -28,7 +36,7 @@ const employeesSlice = createSlice({
         currentState.loading = false;
         const mockListData = action.payload;
 
-        // Vérifier si chaque nouvel employé n'est pas déjà présent dans la liste affin d'éviter de dupliquer les données
+        // Check if each new employee is not already present in the list to avoid duplicating data
         const filteredMockListData = mockListData.filter(
           (newEmployee) =>
             !currentState.list.some(
@@ -36,7 +44,7 @@ const employeesSlice = createSlice({
             )
         );
 
-        // Mettre à jour la liste avec les nouveaux employés filtrés
+        // Update the list with the new filtered employees
         currentState.list = [...currentState.list, ...filteredMockListData];
       })
 

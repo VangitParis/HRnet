@@ -1,4 +1,4 @@
-
+// States config
 const states = [
     {
         "name": "Alabama",
