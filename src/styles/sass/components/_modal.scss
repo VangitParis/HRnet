@@ -3,21 +3,13 @@
     position: relative;
     right: 0;
     top: -45px;
-    left: 295px;
+    left: 100%;
     bottom: 15px;
     width: 24px;
     height: 24px;
     align-items: center;
     justify-content: center;
-    @include max-width ($breakpoint-sm){
-        left: 205px;
-    }
-    @include respond-to ($breakpoint-md){
-        left: 290px;
-    }
-    @include respond-to($breakpoint-xxxl){
-        left: 315px;
-    }
+  
 }
 
 .modal-content{
@@ -32,7 +24,7 @@
         width: 27%;
     }
     @include respond-to($breakpoint-xxl){
-        width: 20%;
+        width: 25%;
     }
     @include respond-to($breakpoint-xxxl){
         width: 16%;
